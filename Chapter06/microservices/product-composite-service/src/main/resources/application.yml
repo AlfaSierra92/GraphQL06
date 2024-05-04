@@ -64,6 +64,11 @@ api:
 
 server.port: 7000
 server.error.include-message: always
+spring:
+  security:
+    user:
+      name: user
+      password: password
 
 app:
   product-service:
@@ -80,6 +85,7 @@ logging:
   level:
     root: INFO
     se.magnus: DEBUG
+    org.springframework.security: TRACE
 
 ---
 spring.config.activate.on-profile: docker
