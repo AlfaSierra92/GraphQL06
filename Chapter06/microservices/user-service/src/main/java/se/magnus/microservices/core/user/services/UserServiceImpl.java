@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
-//import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Locale;
@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserService {
         try {
             body.setName(body.getName().toLowerCase(Locale.ROOT));
 
-            //Argon2PasswordEncoder argon2PasswordEncoder =
-            //        new Argon2PasswordEncoder(saltLength, hashLength, parallelism, memory, iterations);
-            //body.setPassword(argon2PasswordEncoder.encode(body.getPassword()));
+            Argon2PasswordEncoder argon2PasswordEncoder =
+                    new Argon2PasswordEncoder(saltLength, hashLength, parallelism, memory, iterations);
+            body.setPassword(argon2PasswordEncoder.encode(body.getPassword()));
             UserEntity entity = mapper.apiToEntity(body);
             UserEntity newEntity = repository.save(entity);
 
