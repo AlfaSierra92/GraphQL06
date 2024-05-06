@@ -54,4 +54,9 @@ public interface UserService {
      */
     @DeleteMapping(value = "/user/{userId}")
     void deleteUser(@PathVariable int userId);
+
+    @GetMapping(
+            value = "/auth/{name:[A-Za-z]+}",
+            produces = "application/json")
+    User getAuth(@PathVariable String name);
 }

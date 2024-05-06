@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new NotFoundException("No user found for name: " + name));
 
         User response = mapper.entityToApi(entity);
+        response.setPassword(null);
         response.setServiceAddress(serviceUtil.getServiceAddress());
 
         log.debug("getProduct: found name: {}", response.getName());
@@ -88,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
         User response = mapper.entityToApi(entity);
         response.setServiceAddress(serviceUtil.getServiceAddress());
-
+        response.setPassword(null);
         log.debug("getProduct: found userId: {}", response.getUserId());
 
         return response;
@@ -98,5 +99,24 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(int userId) {
         log.debug("deleteProduct: tries to delete an entity with userId: {}", userId);
         repository.findByUserId(userId).ifPresent(e -> repository.delete(e));
+    }
+
+    @Override
+    public User getAuth(String name) {
+
+        if (name == null || name.isEmpty()) {
+            throw new InvalidInputException("Invalid name: " + name);
+        }
+
+        UserEntity entity = repository.findByName(name.toLowerCase())
+                .orElseThrow(() -> new NotFoundException("No user found for name: " + name));
+
+        User response = mapper.entityToApi(entity);
+        //response.setPassword(null);
+        response.setServiceAddress(serviceUtil.getServiceAddress());
+
+        log.debug("getName: found name: {}", response.getName());
+
+        return response;
     }
 }

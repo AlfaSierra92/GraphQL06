@@ -18,8 +18,9 @@ public class SecurityConfiguration {
         http
                 .authorizeExchange(exchanges -> exchanges
                                 .pathMatchers(HttpMethod.GET,  "/user/**").permitAll()
-                                .pathMatchers(HttpMethod.POST, "/user/**").authenticated()
-                                .pathMatchers(HttpMethod.DELETE, "/user/**").authenticated()
+                                .pathMatchers(HttpMethod.POST, "/user/**").permitAll()
+                                .pathMatchers(HttpMethod.DELETE, "/user/**").permitAll()
+                                .pathMatchers(HttpMethod.GET, "/auth/**").authenticated()
                         //.anyExchange().permitAll()
                 )
                 .httpBasic(withDefaults())
