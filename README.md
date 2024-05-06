@@ -1,5 +1,5 @@
 # Microservices with Spring Boot 3 and Spring Cloud, Third Edition - CHAPTER 06
-Potentially chapter 06 with authentication. Stay tunded for further details.
+Potentially chapter 06 edited for DEP exam. Stay tunded for further details.
 
 *This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
