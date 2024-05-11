@@ -2,7 +2,7 @@ type Product {
     productId: Int!
     name: String!
     weight: Int!
-    serviceAddress: String!
+    serviceAddress: String
 }
 
 input ProductInput {
