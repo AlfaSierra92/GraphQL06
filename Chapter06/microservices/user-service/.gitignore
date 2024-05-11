@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+create-projects.bash
+gradle/
+gradlew
+gradlew.bat
+test-em-all.bash
