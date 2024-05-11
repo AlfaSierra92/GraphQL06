@@ -9,14 +9,13 @@ input ProductInput {
     productId: Int!
     name: String!
     weight: Int!
-    serviceAddress: String
 }
 
 type Query {
-    getProduct(productId: Int!): Product
+    getProduct(productId: Int!): Product!
 }
 
 type Mutation {
-    createProduct(input: ProductInput!): Product
+    createProduct(input: ProductInput!): Product!
     deleteProduct(productId: Int!): Boolean
 }

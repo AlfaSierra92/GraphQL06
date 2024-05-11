@@ -3,8 +3,8 @@ package se.magnus.microservices.core.product.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import se.magnus.api.core.product.Product;
 import se.magnus.api.core.product.ProductController;
@@ -48,8 +48,25 @@ public class ProductControllerImpl implements ProductController {
         return response;
     }
 
-    /*@SchemaMapping
-    public Author author(Book book) {
-        return Author.getById(book.authorId());
-    }*/
+    @Override
+    public Product createProduct(@Argument Product input) {
+        try {
+            ProductEntity entity = mapper.apiToEntity(input);
+            ProductEntity newEntity = repository.save(entity);
+
+            LOG.debug("createProduct: entity created for productId: {}", input.getProductId());
+            return mapper.entityToApi(newEntity);
+
+        } catch (DuplicateKeyException dke) {
+            throw new InvalidInputException("Duplicate key, Product Id: " + input.getProductId());
+        }
+    }
+
+    @Override
+    public Boolean deleteProduct(int productId) {
+        LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
+        repository.findByProductId(productId).ifPresent(e -> repository.delete(e));
+
+        return Boolean.TRUE;
+    }
 }
