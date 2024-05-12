@@ -69,7 +69,12 @@ spring:
     user:
       name: user
       password: password
-
+  graphql:
+    schema:
+      locations: classpath*:graphql/product-composite-service/**/
+    graphiql:
+      path: /graphiql
+      enabled: true
 app:
   product-service:
     host: localhost
@@ -86,6 +91,7 @@ logging:
     root: INFO
     se.magnus: DEBUG
     org.springframework.security: TRACE
+    org.springframework.graphql: TRACE
 
 ---
 spring.config.activate.on-profile: docker
