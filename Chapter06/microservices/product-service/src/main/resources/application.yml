@@ -2,6 +2,8 @@ server.port: 7001
 server.error.include-message: always
 spring:
   graphql:
+    schema:
+      locations: classpath*:graphql/product-service/**/
     graphiql:
       path: /graphiql
       enabled: true

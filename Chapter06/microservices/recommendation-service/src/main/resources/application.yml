@@ -1,5 +1,12 @@
 server.port: 7002
 server.error.include-message: always
+spring:
+  graphql:
+    schema:
+      locations: classpath*:graphql/recommendation-service/**/
+    graphiql:
+      path: /graphiql
+      enabled: true
 
 spring.data.mongodb:
   host: localhost

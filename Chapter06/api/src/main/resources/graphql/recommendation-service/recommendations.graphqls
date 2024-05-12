@@ -1,0 +1,25 @@
+type Recommendation {
+    productId: Int!
+    recommendationId: Int!
+    author: String!
+    rate: Int!
+    content: String!
+    serviceAddress: String
+}
+
+input RecommendationInput {
+    productId: Int!
+    recommendationId: Int!
+    author: String!
+    rate: Int!
+    content: String!
+}
+
+type Query {
+    getRecommendations(productId: Int!): [Recommendation]!
+}
+
+type Mutation {
+    createRecommendations(input: RecommendationInput!): Recommendation!
+    deleteRecommendations(productId: Int!): Boolean
+}
