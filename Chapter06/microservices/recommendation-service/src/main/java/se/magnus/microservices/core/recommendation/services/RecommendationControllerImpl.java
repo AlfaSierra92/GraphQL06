@@ -32,16 +32,16 @@ public class RecommendationControllerImpl implements RecommendationController {
     }
 
     @Override
-    public Recommendation createRecommendations(Recommendation body) {
+    public Recommendation createRecommendations(Recommendation input) {
         try {
-            RecommendationEntity entity = mapper.apiToEntity(body);
+            RecommendationEntity entity = mapper.apiToEntity(input);
             RecommendationEntity newEntity = repository.save(entity);
 
-            LOG.debug("createRecommendation: created a recommendation entity: {}/{}", body.getProductId(), body.getRecommendationId());
+            LOG.debug("createRecommendation: created a recommendation entity: {}/{}", input.getProductId(), input.getRecommendationId());
             return mapper.entityToApi(newEntity);
 
         } catch (DuplicateKeyException dke) {
-            throw new InvalidInputException("Duplicate key, Product Id: " + body.getProductId() + ", Recommendation Id:" + body.getRecommendationId());
+            throw new InvalidInputException("Duplicate key, Product Id: " + input.getProductId() + ", Recommendation Id:" + input.getRecommendationId());
         }
     }
 

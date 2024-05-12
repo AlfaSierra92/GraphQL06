@@ -1,0 +1,25 @@
+type Review {
+    productId: Int!
+    reviewId: Int!
+    author: String!
+    subject: String!
+    content: String!
+    serviceAddress: String
+}
+
+input ReviewInput {
+    productId: Int!
+    reviewId: Int!
+    author: String!
+    subject: String!
+    content: String!
+}
+
+type Query {
+    getReviews(productId: Int!): [Review]!
+}
+
+type Mutation {
+    createReviews(input: ReviewInput!): Review!
+    deleteReviews(productId: Int!): Boolean
+}
