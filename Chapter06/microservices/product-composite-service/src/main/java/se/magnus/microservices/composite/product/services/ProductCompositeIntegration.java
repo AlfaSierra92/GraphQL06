@@ -105,6 +105,9 @@ public class ProductCompositeIntegration {
             JsonNode rootNode = mapper.readTree(responseBody);
             // Extracting values from JSON
             JsonNode productNode = rootNode.path("data").path("getProduct");
+            if (productNode.isMissingNode()) { // In case of a missing product
+                throw new NotFoundException("No product found for productId: " + productId);
+            }
             String name = productNode.path("name").asText();
             int weight = productNode.path("weight").asInt();
             String serviceAddress = productNode.path("serviceAddress").asText();
