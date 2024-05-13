@@ -57,12 +57,12 @@ public class ProductCompositeIntegration {
         reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/graphql";
     }
 
-    /*public Product createProduct(Product body) {
+    public Product createProduct(Product body) {
         throw new UnsupportedOperationException("Creating a product via GraphQL is not supported.");
-    }*/
+    }
 
     // HIGHLY EXPERIMENTAL!!! DO NOT USE IN PRODUCTION (MAYBE)!!!
-    public Product createProduct(Product productInput) {
+    /*public Product createProduct(Product productInput) {
         try {
             String mutation = "mutation { createProduct(input: { productId: " + productInput.getProductId() +
                     ", name: \"" + productInput.getName() + "\", weight: " + productInput.getWeight() +
@@ -93,7 +93,7 @@ public class ProductCompositeIntegration {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public Product getProduct(int productId) {
         try {
