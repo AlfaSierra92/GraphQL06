@@ -11,9 +11,6 @@ input ProductAggregateInput {
     productId: Int!
     name: String!
     weight: Int!
-    recommendations: [RecommendationSummaryInput]
-    reviews: [ReviewSummaryInput]
-    serviceAddresses: [ServiceAddressesInput]
 }
 
 type RecommendationSummary {
@@ -62,7 +59,7 @@ type Query {
     getProductAggregate(productId: Int!): ProductAggregate!
 }
 
-# type Mutation {
-    # createProductAggregate(body: ProductAggregateInput!): ProductAggregate
+type Mutation {
+    createProductAggregate(body: ProductAggregateInput!): ProductAggregate
     # deleteProductAggregate(productId: Int!): Boolean
-#}
+}

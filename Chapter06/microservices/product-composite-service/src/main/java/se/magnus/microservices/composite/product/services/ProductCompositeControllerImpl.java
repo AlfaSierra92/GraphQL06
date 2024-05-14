@@ -3,6 +3,7 @@ package se.magnus.microservices.composite.product.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Controller;
 import se.magnus.api.composite.product.*;
 import se.magnus.api.core.product.Product;
@@ -29,8 +30,8 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
         this.integration = integration;
     }
 
-    /*@Override
-    public ProductAggregate createProductAggregate(ProductAggregate body) {
+    @Override
+    public Product createProductAggregate(@Argument Product body) {
 
         try {
 
@@ -39,7 +40,7 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
             Product product = new Product(body.getProductId(), body.getName(), body.getWeight(), null);
             integration.createProduct(product);
 
-            if (body.getRecommendations() != null) {
+            /*if (body.getRecommendations() != null) {
                 body.getRecommendations().forEach(r -> {
                     Recommendation recommendation = new Recommendation(body.getProductId(), r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent(), null);
                     integration.createRecommendation(recommendation);
@@ -51,7 +52,7 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
                     Review review = new Review(body.getProductId(), r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent(), null);
                     integration.createReview(review);
                 });
-            }
+            }*/
 
             LOG.debug("createCompositeProduct: composite entities created for productId: {}", body.getProductId());
 
@@ -60,11 +61,11 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
             throw re;
         }
         return body;
-    }*/
+    }
 
 
     @Override
-    public ProductAggregate getProductAggregate(int productId) {
+    public ProductAggregate getProductAggregate(@Argument int productId) {
 
         LOG.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
 

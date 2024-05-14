@@ -17,8 +17,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import se.magnus.api.core.product.Product;
+import se.magnus.api.core.product.ProductService;
 import se.magnus.api.core.recommendation.Recommendation;
+import se.magnus.api.core.recommendation.RecommendationService;
 import se.magnus.api.core.review.Review;
+import se.magnus.api.core.review.ReviewService;
 import se.magnus.api.exceptions.InvalidInputException;
 import se.magnus.api.exceptions.NotFoundException;
 import se.magnus.util.http.HttpErrorInfo;
@@ -27,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProductCompositeIntegration {
+public class ProductCompositeIntegration implements ProductService, RecommendationService, ReviewService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeIntegration.class);
 
@@ -57,16 +60,18 @@ public class ProductCompositeIntegration {
         reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/graphql";
     }
 
-    public Product createProduct(Product body) {
+    /*public Product createProduct(Product body) {
         throw new UnsupportedOperationException("Creating a product via GraphQL is not supported.");
-    }
+    }*/
 
-    // HIGHLY EXPERIMENTAL!!! DO NOT USE IN PRODUCTION (MAYBE)!!!
-    /*public Product createProduct(Product productInput) {
+    @Override
+    public Product createProduct(Product productInput) {
         try {
+            // THANKS cURL FOR THE HELP!!!
             String mutation = "mutation { createProduct(input: { productId: " + productInput.getProductId() +
-                    ", name: \"" + productInput.getName() + "\", weight: " + productInput.getWeight() +
-                    ", serviceAddress: \"" + productInput.getServiceAddress() + "\" }) { productId name weight serviceAddress } }";
+                    ", name: \\\"" + productInput.getName() + "\\\", weight: " + productInput.getWeight() + " }) " +
+                    "{ productId name weight } }";
+
             ResponseEntity<String> response = sendGraphQLRequest(productServiceUrl, mutation, String.class);
 
             ObjectMapper mapper = new ObjectMapper();
@@ -93,8 +98,9 @@ public class ProductCompositeIntegration {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
 
+    @Override
     public Product getProduct(int productId) {
         try {
             String query = "query { getProduct(productId: " + productId + ") { productId name weight serviceAddress } }";
@@ -125,6 +131,7 @@ public class ProductCompositeIntegration {
         }
     }
 
+    @Override
     public void deleteProduct(int productId) {
         throw new UnsupportedOperationException("Deleting a product via GraphQL is not supported.");
     }
@@ -210,6 +217,17 @@ public class ProductCompositeIntegration {
 
     public void deleteReviews(int productId) {
         throw new UnsupportedOperationException("Deleting reviews via GraphQL is not supported.");
+    }
+
+    private <T> ResponseEntity<T> sendGraphQLRequest_mutation(String url, String query, Class<T> responseType) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+
+        String requestBody = "{\"query\":\"" + query + "\"}";
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        return restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType);
     }
 
     private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class<T> responseType) {
