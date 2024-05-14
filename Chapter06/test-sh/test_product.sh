@@ -30,6 +30,8 @@ else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
 
@@ -65,6 +67,8 @@ else
     echo "Errore durante il recupero del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
 
@@ -98,6 +102,8 @@ else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
 
@@ -123,6 +129,8 @@ else
     echo "Errore durante l'eliminazione del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
 
@@ -156,6 +164,8 @@ else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
 
@@ -189,6 +199,8 @@ else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
 
@@ -214,6 +226,8 @@ else
     echo "Errore durante l'eliminazione del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
 
@@ -249,5 +263,7 @@ else
     echo "Errore durante il recupero del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
+    echo "TEST FAILED"
+        exit 1
 fi
 echo -e ""
