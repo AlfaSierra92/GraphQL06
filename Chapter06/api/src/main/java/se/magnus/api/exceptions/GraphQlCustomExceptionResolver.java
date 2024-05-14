@@ -19,16 +19,14 @@ public class GraphQlCustomExceptionResolver extends DataFetcherExceptionResolver
                     .path(env.getExecutionStepInfo().getPath())
                     .location(env.getField().getSourceLocation())
                     .build();
-        }
-        if (ex instanceof InvalidInputException) {
+        } else if (ex instanceof InvalidInputException) {
             return GraphqlErrorBuilder.newError()
                     .errorType(ErrorType.BAD_REQUEST)
                     .message(ex.getMessage())
                     .path(env.getExecutionStepInfo().getPath())
                     .location(env.getField().getSourceLocation())
                     .build();
-        }
-        if (ex instanceof BadRequestException) {
+        } else if (ex instanceof BadRequestException) {
             return GraphqlErrorBuilder.newError()
                     .errorType(ErrorType.BAD_REQUEST)
                     .message(ex.getMessage())
