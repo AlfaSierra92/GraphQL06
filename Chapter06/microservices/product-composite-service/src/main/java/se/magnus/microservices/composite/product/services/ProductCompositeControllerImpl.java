@@ -40,20 +40,6 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
             Product product = new Product(body.getProductId(), body.getName(), body.getWeight(), null);
             integration.createProduct(product);
 
-            /*if (body.getRecommendations() != null) {
-                body.getRecommendations().forEach(r -> {
-                    Recommendation recommendation = new Recommendation(body.getProductId(), r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent(), null);
-                    integration.createRecommendation(recommendation);
-                });
-            }
-
-            if (body.getReviews() != null) {
-                body.getReviews().forEach(r -> {
-                    Review review = new Review(body.getProductId(), r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent(), null);
-                    integration.createReview(review);
-                });
-            }*/
-
             LOG.debug("createCompositeProduct: composite entities created for productId: {}", body.getProductId());
 
         } catch (RuntimeException re) {

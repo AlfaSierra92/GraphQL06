@@ -12,7 +12,7 @@ public class GraphQlCustomExceptionResolver extends DataFetcherExceptionResolver
 
     @Override
     protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
-        if (/*ex instanceof InvalidInputException || */ex instanceof NotFoundException/* || ex instanceof BadRequestException*/) {
+        if (ex instanceof NotFoundException) {
             return GraphqlErrorBuilder.newError()
                     .errorType(ErrorType.NOT_FOUND)
                     .message(ex.getMessage())
