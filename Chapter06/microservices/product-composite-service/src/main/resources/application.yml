@@ -62,7 +62,7 @@ api:
 
         This means that a delete request of a non-existing product will return **200 Ok**.
 
-server.port: 7000
+server.port: 6999
 server.error.include-message: always
 spring:
   security:

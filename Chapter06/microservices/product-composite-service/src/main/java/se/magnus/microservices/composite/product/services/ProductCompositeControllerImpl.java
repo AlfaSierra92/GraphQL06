@@ -76,10 +76,6 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
 
         integration.deleteProduct(productId);
 
-        //integration.deleteRecommendations(productId);
-
-        //integration.deleteReviews(productId);
-
         LOG.debug("deleteCompositeProduct: aggregate entities deleted for productId: {}", productId);
         return Boolean.TRUE;
     }
