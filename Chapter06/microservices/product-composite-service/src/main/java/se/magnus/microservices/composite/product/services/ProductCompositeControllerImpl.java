@@ -83,20 +83,20 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
         return createProductAggregate_1(product, recommendations, reviews, serviceUtil.getServiceAddress());
     }
 
-    /*@Override
+    @Override
     public Boolean deleteProductAggregate(int productId) {
 
         LOG.debug("deleteCompositeProduct: Deletes a product aggregate for productId: {}", productId);
 
         integration.deleteProduct(productId);
 
-        integration.deleteRecommendations(productId);
+        //integration.deleteRecommendations(productId);
 
-        integration.deleteReviews(productId);
+        //integration.deleteReviews(productId);
 
         LOG.debug("deleteCompositeProduct: aggregate entities deleted for productId: {}", productId);
         return Boolean.TRUE;
-    }*/
+    }
 
     private ProductAggregate createProductAggregate_1(
             Product product,

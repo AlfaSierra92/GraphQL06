@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -59,10 +56,6 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort + "/graphql";
         reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/graphql";
     }
-
-    /*public Product createProduct(Product body) {
-        throw new UnsupportedOperationException("Creating a product via GraphQL is not supported.");
-    }*/
 
     @Override
     public Product createProduct(Product productInput) {
@@ -133,7 +126,23 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     @Override
     public void deleteProduct(int productId) {
-        throw new UnsupportedOperationException("Deleting a product via GraphQL is not supported.");
+        try {
+            String mutation = "mutation { deleteProduct(productId: " + productId + ") }";
+            ResponseEntity<String> response = sendGraphQLRequest(productServiceUrl, mutation, String.class);
+
+            // Log success message
+            LOG.debug("Deleted product with ID: {}", productId);
+        } catch (HttpClientErrorException ex) {
+            // Handle HTTP errors
+            if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new NotFoundException("Product with ID " + productId + " not found.");
+            } else {
+                throw new RuntimeException("Failed to delete product with ID " + productId + ": " + ex.getMessage());
+            }
+        } catch (Exception ex) {
+            // Handle other exceptions
+            throw new RuntimeException("Failed to delete product with ID " + productId + ": " + ex.getMessage());
+        }
     }
 
     public Recommendation createRecommendation(Recommendation body) {

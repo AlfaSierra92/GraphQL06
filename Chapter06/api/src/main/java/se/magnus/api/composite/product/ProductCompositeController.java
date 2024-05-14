@@ -39,6 +39,6 @@ public interface ProductCompositeController {
     @MutationMapping
     public Product createProductAggregate(@Argument Product body);
 
-    /*@MutationMapping
-    public Boolean deleteProductAggregate(@Argument int productId);*/
+    @MutationMapping
+    public Boolean deleteProductAggregate(@Argument int productId);
 }
