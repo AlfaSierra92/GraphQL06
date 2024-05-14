@@ -1,6 +1,12 @@
 package se.magnus.api.exceptions;
 
 public class NotFoundException extends RuntimeException {
+
+  @Override
+  public Throwable fillInStackTrace() {
+    return this;
+  }
+
   public NotFoundException() {}
 
   public NotFoundException(String message) {

@@ -1,6 +1,12 @@
 package se.magnus.api.exceptions;
 
 public class BadRequestException extends RuntimeException {
+
+  @Override
+  public Throwable fillInStackTrace() {
+    return this;
+  }
+
   public BadRequestException() {}
 
   public BadRequestException(String message) {

@@ -1,6 +1,12 @@
 package se.magnus.api.exceptions;
 
 public class InvalidInputException extends RuntimeException {
+
+  @Override
+  public Throwable fillInStackTrace() {
+    return this;
+  }
+
   public InvalidInputException() {}
 
   public InvalidInputException(String message) {
