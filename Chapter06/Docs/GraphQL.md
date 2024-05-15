@@ -248,7 +248,7 @@ public interface ProductController {
 
 Worthy of note are the annotations *@QueryMapping*, which indicates that the query of the same name defined in the schema will refer to this method, *@MutationMapping* with regard to modification queries and finally *@Argument* which refers to the attributes passed by the query or mutation queries.
 
-- **Implementazione Interfaccia**:
+- **Interface  implementation**:
 
 ```java
 @Controller
