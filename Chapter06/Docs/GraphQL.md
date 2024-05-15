@@ -2,15 +2,15 @@
 
 ## Introduction
 
-GraphQL è un linguaggio di interrogazione per le API (Application Programming Interface), sviluppato da Facebook nel 2012 e reso open-source nel 2015.
+GraphQL is a query language for APIs (Application Programming Interfaces), developed by Facebook in 2012 and made open-source in 2015.
 
-A differenza delle tradizionali API REST, dove il client deve fare più richieste per ottenere tutte le informazioni di cui ha bisogno, GraphQL consente al client di specificare esattamente quali dati vuole ottenere e da dove, in una singola richiesta.
+Unlike traditional REST APIs, where the client has to make multiple requests to obtain all the information it needs, GraphQL allows the client to specify exactly what data it wants to obtain and from where, in a single request.
 
-Con GraphQL, il client invia una query che descrive la struttura dei dati che desidera ricevere, e il server risponde con un JSON contenente solo i dati richiesti, nel formato richiesto dal client. Questo approccio permette una maggiore flessibilità e efficienza, in quanto riduce il sovraccarico di rete e consente al client di ottenere solo i dati di cui ha bisogno, senza informazioni inutili.
+With GraphQL, the client sends a query describing the structure of the data it wishes to receive, and the server responds with a JSON containing only the requested data, in the format requested by the client. This approach allows greater flexibility and efficiency, as it reduces network overhead and allows the client to obtain only the data it needs, without unnecessary information.
 
-Inoltre, GraphQL fornisce un sistema di tipizzazione forte, che consente agli sviluppatori di definire chiaramente la struttura dei dati e di validare le query in fase di compilazione. Questo porta a una migliore documentazione automatica delle API e a una maggiore robustezza nel codice client e server.
+In addition, GraphQL provides a strong typing system, which allows developers to clearly define the data structure and validate queries at compile time. This leads to better automatic API documentation and greater robustness in client and server code.
 
-Per esempio, volendo ottenere le informazioni riguardo ad un singolo utente, è possibile inviare la query:
+For example, if you want to obtain information about an individual user, you can send the query:
 ```
 query {
   user(id: "123") {
@@ -26,15 +26,15 @@ query {
 }
 ```
 
-In questa query:
+In this query:
 
-- **`query`** è la parola chiave che indica che si sta eseguendo una query.
-- **`user`** è il nome dell'endpoint della query, che potrebbe corrispondere a una funzione o a un campo definito nel server GraphQL.
-- **`(id: "123")`** specifica gli argomenti della query. In questo caso, stiamo chiedendo le informazioni di un utente con un ID specifico (nel nostro esempio, "123").
-- **`id`**, **`name`**, **`email`**, **`age`** sono i campi richiesti per l'utente.
-- **`posts`** è un campo che può essere una lista di oggetti, che può contenere ulteriori campi come **`title`** e **`body`**, che rappresentano i post dell'utente.
+- **`query`** is the keyword indicating that a query is being performed.
+- **`user`** is the name of the query endpoint, which may correspond to a function or a field defined in the GraphQL server.
+- **`(id: "123")`** specifies the query arguments. In this case, we are querying the information of a user with a specific ID (in our example, "123").
+- **`id`**, **`name`**, **`email`**, **`age`** are the required user fields.
+- **`posts`** is a field that can be a list of objects, which may contain additional fields such as **`title`** and **`body`**, representing the user's posts.
 
-Quando questa query viene eseguita sul server GraphQL, verrà restituito un oggetto JSON contenente le informazioni richieste sull'utente, come l'ID, il nome, l'email, l'età e i post, o eventualmente un errore se l'utente non viene trovato o se si verifica un altro problema durante l'esecuzione della query. Per esempio:
+When this query is executed on the GraphQL server, a JSON object will be returned containing the required information about the user, such as ID, name, email, age and posts, or possibly an error if the user is not found or another problem occurs during the execution of the query. For example:
 
 ```json
 {
@@ -59,28 +59,28 @@ Quando questa query viene eseguita sul server GraphQL, verrà restituito un ogge
 }
 ```
 
-In questa risposta:
+In this answer:
 
-- Abbiamo un oggetto JSON con una chiave **`data`**, che contiene i dati richiesti dalla query.
-- All'interno dell'oggetto **`data`**, abbiamo un oggetto **`user`**, che contiene le informazioni sull'utente richiesto.
-- L'oggetto **`user`** contiene le proprietà **`id`**, **`name`**, **`email`** e **`age`**, che corrispondono alle informazioni dell'utente specificato nella query.
-- La proprietà **`posts`** è un array che contiene gli oggetti post dell'utente, ognuno con i campi **`title`** e **`body`**. In questo caso, abbiamo due post restituiti.
+- We have a JSON object with a key **`data`**, which contains the data required by the query.
+- Within the object **`data`**, we have an object **`user`**, which contains information about the requested user.
+- The object **`user`** contains the properties **`id`**, **`name`**, **`email`** and **`age`**, which match the information of the user specified in the query.
+- The property **`posts`` is an array containing the user's post objects, each with fields **`title`** and **`body`**. In this case, we have two returned posts.
 
 ## Technical explanation
 
 ### Schema
 
-Lo schema GraphQL definisce la struttura dei dati disponibili attraverso un'API GraphQL. Questo schema fornisce una mappa chiara dei tipi di dati disponibili e delle relazioni tra di essi, consentendo agli sviluppatori di comprendere come interagire con l'API e quali dati possono essere richiesti e inviati. Infatti è possibile effettuare, a priori, una richiesta al fine di conoscere esso e di conseguenza gli oggetti e query disponibili.
+The GraphQL schema defines the structure of the data available through a GraphQL API. This schema provides a clear map of the available data types and the relationships between them, enabling developers to understand how to interact with the API and what data can be requested and sent. In fact, it is possible to make a request in advance in order to know what objects and queries are available.
 
-Nello schema GraphQL, vengono definiti diversi tipi di dati, tra cui:
+In the GraphQL schema, several data types are defined, including:
 
-1. **Tipi oggetto**: Rappresentano gli oggetti all'interno del sistema. Ad esempio, un tipo oggetto potrebbe rappresentare un utente, un post o qualsiasi altra entità nel sistema.
-2. **Campi**: Sono le proprietà di un tipo oggetto. Ogni campo ha un nome e un tipo. I campi possono essere scalari (stringhe, numeri, booleani, etc.) o possono essere altri tipi oggetto.
-3. **Argomenti**: Sono i parametri passati ai campi per personalizzare il risultato. Ad esempio, una query per ottenere informazioni su un utente potrebbe richiedere un argomento come l'ID dell'utente.
-4. **Tipi scalari**: Sono i tipi di dati primitivi, come stringhe, numeri, booleani, etc.
-5. **Elenco di tipi**: Indica un array di un tipo specifico di dato. Ad esempio, un elenco di post.
+1. **Object Types**: They represent objects within the system. For example, an object type could represent a user, a post or any other entity in the system.
+2. **Fields**: These are the properties of an object type. Each field has a name and a type. Fields can be scalar (strings, numbers, booleans, etc.) or they can be other object types.
+3. **Arguments**: These are the parameters passed to fields to customise the result. For example, a query to obtain information about a user might require an argument such as the user's ID.
+4. **Scalar types**: These are the primitive data types, such as strings, numbers, Booleans, etc.
+5. **List of types**: Indicates an array of a specific type of data. For example, a list of posts.
 
-Ecco un esempio semplificato di come potrebbe apparire uno schema GraphQL:
+Here is a simplified example of what a GraphQL schema might look like:
 
 ```graphql
 type Product {
@@ -106,23 +106,23 @@ type Mutation {
 }
 ```
 
-In questo esempio:
+In this example:
 
-- E’ stato definito un tipo di oggetto: Product, che rappresenta i prodotti nel sistema.
-- Ogni tipo oggetto ha dei campi che rappresentano le proprietà di quell'oggetto; con le rispettive tipologie (integer, stringhe, etc.). Il simbolo "!" in uno schema GraphQL indica che un campo è obbligatorio, ovvero deve sempre avere un valore quando viene restituito dal server GraphQL. Se un campo ha il simbolo "!", significa che non può essere nullo e deve essere incluso nel risultato della query.
-- L'**`Input`** è un tipo di dato utilizzato per definire la struttura dei parametri di input per le mutazioni. Le mutazioni sono operazioni che modificano o aggiornano i dati nel server GraphQL, come ad esempio la creazione di un nuovo utente o la modifica di un post.
-- Il tipo **`Query`** definisce le operazioni di lettura (queries) disponibili, come getProduct, che restituisce i dettagli del prodotto avente quello specifico *productId*.
-- Le **`Mutation`** in GraphQL sono operazioni che consentono di modificare i dati sul server. Mentre le query sono utilizzate per leggere i dati, le mutazioni permettono di creare, modificare o eliminare dati nel sistema; prendono in input i parametri definiti all’interno delle parentesi tonde e restituiscono i valori della tipologia definita dopo il simbolo “:”; anche qui la presenza del simbolo “!” significa che successivamente all’esecuzione dell’operazione, essa deve restituire qualcosa diverso da *null*. Le mutazioni sono definite all'interno dello schema GraphQL proprio come le query, ma vengono annotate con il tipo **`Mutation`** anziché **`Query`**.
+- An object type was defined: Product, which represents products in the system.
+- Each object type has fields representing the properties of that object; with their respective types (integer, string, etc.). The "!" symbol in a GraphQL schema indicates that a field is mandatory, i.e. it must always have a value when returned by the GraphQL server. If a field has the "!" symbol, it means that it cannot be null and must be included in the query result.
+- The **`Input`** is a data type used to define the structure of input parameters for mutations. Mutations are operations that modify or update data in the GraphQL server, such as creating a new user or editing a post.
+- The type **`Query`** defines the available read operations (queries), such as getProduct, which returns the details of the product having that specific *productId*.
+- The **`Mutation`** in GraphQL are operations that allow data to be modified on the server. Whereas queries are used to read data, mutations allow data to be created, modified or deleted in the system; they take as input the parameters defined within the round brackets and return the values of the type defined after the symbol ":"; again the presence of the symbol "!" symbol means that after the operation is executed, it must return something other than *null*. Mutations are defined within the GraphQL schema just like queries, but are annotated with the type **`Mutation`** instead of **`Query`**.
 
 ### Responses
 
-Una particolarità di GraphQL, a differenza da REST, è che il codice di stato della risposta HTTP è sempre 200, indipendentemente dal fatto che la richiesta abbia avuto successo o meno. Questo perché GraphQL gestisce gli errori in modo diverso rispetto alle API REST tradizionali.
+A special feature of GraphQL, unlike REST, is that the status code of the HTTP response is always 200, regardless of whether the request was successful or not. This is because GraphQL handles errors differently from traditional REST APIs.
 
-Invece di utilizzare il codice di stato HTTP per segnalare errori, GraphQL restituisce un oggetto JSON con una chiave "errors" nel corpo della risposta se si verificano errori durante l'elaborazione della query. Questo oggetto contiene una lista di errori che forniscono dettagli sul tipo di errore e su dove è avvenuto.
+Instead of using the HTTP status code to report errors, GraphQL returns a JSON object with an 'errors' key in the response body if errors occur during query processing. This object contains a list of errors giving details of the type of error and where it occurred.
 
-Ad esempio, se una query GraphQL contiene un errore di sintassi, il server risponderà con uno stato 200 e includerà un oggetto "errors" nella risposta per indicare l'errore specifico:
+For example, if a GraphQL query contains a syntax error, the server will respond with a status 200 and include an 'errors' object in the response to indicate the specific error:
 
-- **Query errata**:
+- **Wrong query**:
 
     ```bash
     query GetProduct {
@@ -135,7 +135,7 @@ Ad esempio, se una query GraphQL contiene un errore di sintassi, il server rispo
     }
     ```
 
-- **Risposta**:
+- **Response**:
 
     ```bash
     {
@@ -148,26 +148,26 @@ Ad esempio, se una query GraphQL contiene un errore di sintassi, il server rispo
     ```
 
 
-D'altra parte, se la query viene elaborata correttamente e non ci sono errori, la risposta sarà comunque uno stato 200 e includerà i dati richiesti nella risposta JSON.
+On the other hand, if the query is processed correctly and there are no errors, the response will still be status 200 and will include the requested data in the JSON response.
 
-Quindi, quando si lavora con GraphQL, è importante esaminare il contenuto della risposta JSON per determinare se la richiesta ha avuto successo o meno, anziché basarsi esclusivamente sul codice di stato HTTP.
+Therefore, when working with GraphQL, it is important to examine the content of the JSON response to determine whether the request was successful or not, rather than relying solely on the HTTP status code.
 
 ## Spring boot with GraphQL
 
-### Implementazione
+### Implementation
 
-Spring Boot e GraphQL possono essere combinati insieme per creare servizi web che utilizzano GraphQL come strato di query per accedere ai dati. Spring Boot offre una serie di librerie e strumenti che semplificano l'integrazione di GraphQL nelle applicazioni Java.
+Spring Boot and GraphQL can be combined to create web services that use GraphQL as a query layer to access data. Spring Boot offers a number of libraries and tools that simplify the integration of GraphQL in Java applications.
 
-Al fine di una corretta implementazione, ci sono alcuni passi da seguire:
+In order to implement correctly, there are a few steps to follow:
 
-1. L’inclusione delle corrette dipendenze in Maven o Gradle.
-2. La definizione dello schema con i vari tipi di oggetti, input, query e mutation.
-3. L’abilitazione dell’endpoint graphql nel file *application.yml*.
-4. La creazione dell’interfaccia del controller e la sua implementazione
+1. Inclusion of the correct dependencies in Maven or Gradle.
+2. The definition of the schema with the various types of objects, inputs, queries and mutations.
+3. Enabling the graphql endpoint in the file *application.yml*.
+4. The creation of the controller interface and its implementation
 
-### 1. Inclusione delle dipendenze
+### 1. Inclusion of addictions
 
-Nel file *build.gradle* inserire:
+In the file *build.gradle* enter:
 
 ```bash
 plugins {
@@ -192,15 +192,15 @@ dependencies {
 
 ```
 
-### 2. Definizione dello schema.graphqls
+### 2. Schema definition.graphqls
 
-Al fine di definire gli oggetti, dobbiamo creare il file, con estensione `*.graphqls`, apposito che dovrà essere obbligatoriamente e senza sottocartelle inserito all’interno del path `src/main/java/resources/graphql`.
+In order to define the objects, we must create the file, with the extension `*.graphqls`, which must be placed in the path `src/main/java/resources/graphql`.
 
-All’interno della cartella dovrà esserci un singolo file schema; è possibile splittarli nel caso di definizione di schemi diversi per applicazioni differenti che attingono alla stessa cartella *resources* andando a creare delle sottocartelle e definendo ciò nei rispettivi *application.yml (vedi dopo).*
+There shall be a single schema file within the folder; it is possible to split them in the case of defining different schemas for different applications that draw from the same *resources* folder by creating subfolders and defining this in the respective *application.yml (see later).*
 
-### 3. Abilitazione endpoint graphQL
+### 3. Enabling graphQL endpoints
 
-E’ necessario poi abilitare l’endpoint andando ad inserire nel file *application.yml* le voci corrette:
+It is then necessary to enable the endpoint by entering the correct entries in the file *application.yml*:
 
 ```yaml
 spring:
@@ -209,7 +209,7 @@ spring:
       locations: classpath*:graphql/**/
 ```
 
-Volendo, è possibile dichiarare un classpath diverso al fine di inserire i file *.graphls in sottocartelle diverse per ragioni di comodità. In tal caso:
+If desired, it is possible to declare a different classpath in order to place *.graphls files in different subdirectories for reasons of convenience. In that case:
 
 ```yaml
 spring:
@@ -218,9 +218,9 @@ spring:
       locations: classpath*:graphql/product-service/**/
 ```
 
-In tal caso, l’applicazione andrà a cercare il file schema all’interno della sottocartella *product-service.*
+In this case, the application will search for the schema file within the subfolder *product-service.*
 
-Di default, l’endpoint sarà raggiungibile all’url `$ADDRESS:$PORT/graphql`. E’ possibile modificare questo andando ad aggiungere, sempre nel *application.yml*:
+By default, the endpoint will be reachable at the url `$ADDRESS:$PORT/graphql`. You can change this by adding in *application.yml*:
 
 ```yaml
 spring:
@@ -228,9 +228,9 @@ spring:
                path: /api/projects/graphql
 ```
 
-### 4. Definizione interfaccia Java e sua implementazione
+### 4. Java interface definition and implementation
 
-- **Interfaccia Controller**:
+- **Controller Interface**:
 
 ```java
 public interface ProductController {
@@ -246,7 +246,7 @@ public interface ProductController {
 }
 ```
 
-Degne di nota risultano essere le annotazioni *@QueryMapping*, la quale indica che l’omonima query definita nello schema farà riferimento a tale metodo, *@MutationMapping* per quanto concerne le query di modifica ed infine *@Argument* il quale si riferisce agli attributi passati dalla query di interrogazione o dalle mutation.
+Worthy of note are the annotations *@QueryMapping*, which indicates that the query of the same name defined in the schema will refer to this method, *@MutationMapping* with regard to modification queries and finally *@Argument* which refers to the attributes passed by the query or mutation queries.
 
 - **Implementazione Interfaccia**:
 
@@ -262,17 +262,17 @@ public class ProductControllerImpl implements ProductController {
 }
 ```
 
-### Richieste
+### Requests
 
 **Postman**
 
-Con Postman il tutto risulta molto semplice in quanto esso risulta essere già predisposto per le richieste GraphQL; è sufficiente crearne una della tipologia omonima. Mettendo l’url corretto esso recupererà in maniera automatica lo schema degli oggetti, query e mutazioni e permetterà in maniera intuitiva di comporre le varie query.
+With Postman, this is very simple, as it is already set up for GraphQL queries. By putting in the correct url, it will automatically retrieve the schema of objects, queries and mutations and allow the various queries to be composed intuitively.
 
 ![Postman example](Postman.png)
 
 **cURL**
 
-Con esso la composizione delle richieste risulta essere più laboriosa in quanto bisogna comporre le richieste a mano:
+With it, the composition of requests is more laborious as one has to compose requests by hand:
 
 - **Query di interrogazione**:
 
