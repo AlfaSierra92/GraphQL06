@@ -11,8 +11,7 @@ Con GraphQL, il client invia una query che descrive la struttura dei dati che de
 Inoltre, GraphQL fornisce un sistema di tipizzazione forte, che consente agli sviluppatori di definire chiaramente la struttura dei dati e di validare le query in fase di compilazione. Questo porta a una migliore documentazione automatica delle API e a una maggiore robustezza nel codice client e server.
 
 Per esempio, volendo ottenere le informazioni riguardo ad un singolo utente, è possibile inviare la query:
-
-```json
+```
 query {
   user(id: "123") {
     id
@@ -225,8 +224,8 @@ Di default, l’endpoint sarà raggiungibile all’url `$ADDRESS:$PORT/graphql`.
 
 ```yaml
 spring:
-	graphql:
-		path: /api/projects/graphql
+       graphql:
+               path: /api/projects/graphql
 ```
 
 ### 4. Definizione interfaccia Java e sua implementazione
