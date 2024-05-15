@@ -96,15 +96,25 @@ logging:
 ---
 spring.config.activate.on-profile: docker
 
-server.port: 8080
-
+server.port: 6999
+spring:
+  security:
+    user:
+      name: user
+      password: password
+  graphql:
+    schema:
+      locations: classpath*:graphql/product-composite-service/**/
+    graphiql:
+      path: /graphiql
+      enabled: true
 app:
   product-service:
     host: product
-    port: 8080
+    port: 7001
   recommendation-service:
     host: recommendation
-    port: 8080
+    port: 7002
   review-service:
     host: review
-    port: 8080
+    port: 7003

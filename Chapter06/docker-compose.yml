@@ -4,6 +4,8 @@ services:
   product:
     build: microservices/product-service
     mem_limit: 512m
+    ports:
+      - "7001:7001"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
@@ -13,6 +15,8 @@ services:
   recommendation:
     build: microservices/recommendation-service
     mem_limit: 512m
+    ports:
+      - "7002:7002"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
@@ -22,6 +26,8 @@ services:
   review:
     build: microservices/review-service
     mem_limit: 512m
+    ports:
+      - "7003:7003"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
@@ -32,7 +38,7 @@ services:
     build: microservices/product-composite-service
     mem_limit: 512m
     ports:
-      - "8080:8080"
+      - "6999:6999"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 

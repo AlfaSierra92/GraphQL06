@@ -27,8 +27,14 @@ logging:
 
 ---
 spring.config.activate.on-profile: docker
-
-server.port: 8080
+spring:
+  graphql:
+    schema:
+      locations: classpath*:graphql/review-service/**/
+    graphiql:
+      path: /graphiql
+      enabled: true
+server.port: 7003
 
 spring.datasource:
   url: jdbc:mysql://mysql/review-db
