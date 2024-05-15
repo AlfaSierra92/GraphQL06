@@ -1,4 +1,4 @@
-# GraphQL (ita)
+# GraphQL
 
 ## Introduction
 
