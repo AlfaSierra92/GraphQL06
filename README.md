@@ -1,4 +1,4 @@
-# Microservices with Spring Boot 3 and Spring Cloud, Third Edition - CHAPTER 06
+# GraphQL06
 Chapter 06 GraphQL powered for Distributed Edge programming exam.
 
 We have four microservices:
