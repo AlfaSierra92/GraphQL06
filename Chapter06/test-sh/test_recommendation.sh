@@ -25,6 +25,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $recommendationId"
         echo "Product ID: $productId"
         echo "content: $content"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Error creating recommendation. HTTP Code: $http_code"
@@ -60,6 +61,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $recommendationId"
         echo "Product ID: $productId"
         echo "content: $content"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Error retrieving recommendation. HTTP Code: $http_code"
@@ -85,6 +87,7 @@ if [ "$http_code" -eq 200 ]; then
     if grep -q '"errors":' <<< "$body"; then
         error_message=$(echo "$body" | grep -o '"message":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         echo "Error creating recommendation: $error_message"
+        echo "----------TEST OK----------"
     else
         # Extract JSON values manually
         recommendationId=$(echo "$body" | grep -o '"recommendationId":[0-9]*' | cut -d':' -f2)
@@ -122,6 +125,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "Error deleting recommendation: $error_message"
     else
         echo "Recommendation deleted successfully."
+        echo "----------TEST OK----------"
     fi
 else
     echo "Error deleting recommendation. HTTP Code: $http_code"
@@ -147,6 +151,7 @@ if [ "$http_code" -eq 200 ]; then
     if grep -q '"errors":' <<< "$body"; then
         error_message=$(echo "$body" | grep -o '"message":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         echo "Error creating recommendation: $error_message"
+        echo "----------TEST OK----------"
     else
         # Extract JSON values manually
         recommendationId=$(echo "$body" | grep -o '"recommendationId":[0-9]*' | cut -d':' -f2)
@@ -182,6 +187,7 @@ if [ "$http_code" -eq 200 ]; then
     if grep -q '"errors":' <<< "$body"; then
         error_message=$(echo "$body" | grep -o '"message":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         echo "Error creating recommendation: $error_message"
+        echo "----------TEST OK----------"
     else
         # Extract JSON values manually
         recommendationId=$(echo "$body" | grep -o '"recommendationId":[0-9]*' | cut -d':' -f2)
@@ -192,6 +198,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $recommendationId"
         echo "Product ID: $productId"
         echo "content: $content"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Error creating recommendation. HTTP Code: $http_code"
@@ -218,6 +225,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "Error deleting recommendation: $error_message"
     else
         echo "Recommendation deleted successfully."
+        echo "----------TEST OK----------"
     fi
 else
     echo "Error deleting recommendation. HTTP Code: $http_code"
@@ -254,6 +262,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $recommendationId"
         echo "Product ID: $productId"
         echo "content: $content"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Error retrieving recommendation. HTTP Code: $http_code"
@@ -312,6 +321,7 @@ if [ "$http_code" -eq 200 ]; then
                 echo "Content: $content"
                 echo ""
             done
+            echo "----------TEST OK----------"
         fi
 else
     echo "Error retrieving recommendation. HTTP Code: $http_code"
@@ -338,6 +348,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "Error deleting recommendation: $error_message"
     else
         echo "Recommendation deleted successfully."
+        echo "----------TEST OK----------"
     fi
 else
     echo "Error deleting recommendation. HTTP Code: $http_code"

@@ -25,6 +25,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $productId"
         echo "Nome: $name"
         echo "Peso: $weight"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
@@ -62,6 +63,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "Nome: $name"
         echo "Peso: $weight"
         echo "Indirizzo del servizio: $serviceAddress"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Errore durante il recupero del prodotto. Codice HTTP: $http_code"
@@ -87,6 +89,7 @@ if [ "$http_code" -eq 200 ]; then
     if grep -q '"errors":' <<< "$body"; then
         error_message=$(echo "$body" | grep -o '"message":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         echo "Errore durante la creazione del prodotto: $error_message"
+        echo "----------TEST OK----------"
     else
         # Estrai i valori JSON manualmente
         productId=$(echo "$body" | grep -o '"productId":[0-9]*' | cut -d':' -f2)
@@ -97,6 +100,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $productId"
         echo "Nome: $name"
         echo "Peso: $weight"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
@@ -124,6 +128,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "Errore durante l'eliminazione del prodotto: $error_message"
     else
         echo "Prodotto eliminato con successo."
+        echo "----------TEST OK----------"
     fi
 else
     echo "Errore durante l'eliminazione del prodotto. Codice HTTP: $http_code"
@@ -149,6 +154,7 @@ if [ "$http_code" -eq 200 ]; then
     if grep -q '"errors":' <<< "$body"; then
         error_message=$(echo "$body" | grep -o '"message":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         echo "Errore durante la creazione del prodotto: $error_message"
+        echo "----------TEST OK----------"
     else
         # Estrai i valori JSON manualmente
         productId=$(echo "$body" | grep -o '"productId":[0-9]*' | cut -d':' -f2)
@@ -159,6 +165,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $productId"
         echo "Nome: $name"
         echo "Peso: $weight"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
@@ -194,6 +201,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "ID: $productId"
         echo "Nome: $name"
         echo "Peso: $weight"
+        echo "----------TEST OK----------"
     fi
 else
     echo "Errore durante la creazione del prodotto. Codice HTTP: $http_code"
@@ -221,6 +229,7 @@ if [ "$http_code" -eq 200 ]; then
         echo "Errore durante l'eliminazione del prodotto: $error_message"
     else
         echo "Prodotto eliminato con successo."
+        echo "----------TEST OK----------"
     fi
 else
     echo "Errore durante l'eliminazione del prodotto. Codice HTTP: $http_code"
@@ -246,6 +255,7 @@ if [ "$http_code" -eq 200 ]; then
     if grep -q '"errors":' <<< "$body"; then
         error_message=$(echo "$body" | grep -o '"message":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         echo "Errore durante il recupero del prodotto: $error_message"
+        echo "----------TEST OK----------"
     else
         # Estrai i valori JSON manualmente
         productId=$(echo "$body" | grep -o '"productId":[0-9]*' | cut -d':' -f2)
@@ -258,8 +268,10 @@ if [ "$http_code" -eq 200 ]; then
         echo "Nome: $name"
         echo "Peso: $weight"
         echo "Indirizzo del servizio: $serviceAddress"
+        # echo "----------TEST OK----------"
     fi
 else
+    # echo "----------TEST OK----------"
     echo "Errore durante il recupero del prodotto. Codice HTTP: $http_code"
     echo "Risposta del server:"
     echo "$body"
