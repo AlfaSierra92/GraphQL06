@@ -51,4 +51,9 @@ public class Product {
   public void setServiceAddress(String serviceAddress) {
     this.serviceAddress = serviceAddress;
   }
+
+  // For Mokito testing purposes
+  public Product getProduct(int productId) {
+    return new Product(productId, "name", 1, "address");
+  }
 }
