@@ -51,4 +51,8 @@ public class Product {
   public void setServiceAddress(String serviceAddress) {
     this.serviceAddress = serviceAddress;
   }
+
+  public Product getProduct(int productId) {
+    return new Product(1, "Sample Product", 1, "mock-address");
+  }
 }

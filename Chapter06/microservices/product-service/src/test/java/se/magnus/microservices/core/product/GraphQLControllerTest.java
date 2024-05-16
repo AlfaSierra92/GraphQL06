@@ -28,12 +28,12 @@ public class GraphQLControllerTest {
     private TestRestTemplate restTemplate;
 
     //@MockBean
-    //private Product compositeIntegration;
+    private Product compositeIntegration;
 
     void setUp() {
         // Mock response
-        //when(compositeIntegration.getProduct(1))
-                //.thenReturn(new Product(1, "Sample Product", 1, "mock-address"));
+        when(compositeIntegration.getProduct(1))
+                .thenReturn(new Product(1, "Sample Product", 1, "mock-address"));
     }
 
     @Test
