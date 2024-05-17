@@ -1,5 +1,5 @@
 # GraphQL06
-Chapter 06 GraphQL powered for Distributed Edge programming exam.
+A simple demonstration of two Spring Boot microservices GraphQL powered for Distributed Edge programming exam.
 
 We have two microservices:
 
