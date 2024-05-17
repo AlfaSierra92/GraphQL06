@@ -6,4 +6,7 @@ We have two microservices:
 1. **Product-service** (it exposes *getProduct*, *createProduct* and *deleteProduct*).
 2. **Recommendation-service** (it exposes *getRecommendations*, *createRecommendations* and *deleteRecommendations*).
 
-<img width="764" alt="image" src="https://github.com/AlfaSierra92/Microservices-with-Spring-Boot-and-Spring-Cloud-Third-Edition/assets/4050967/26de0a13-9937-4203-a404-d9bf64f2b16a">
+Both of microservices is composed by three layer:
+1. **Protocol layer** (it exposes APIs to the users).
+2. **Service layer** (it implements the interfaces written in protocol layer).
+3. **Persistence layer** (to save datas into mongodb).
