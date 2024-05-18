@@ -10,3 +10,5 @@ Both of microservices is composed by three layer:
 1. **Protocol layer** (it exposes APIs to the users).
 2. **Service layer** (it implements the interfaces written in protocol layer).
 3. **Persistence layer** (to save datas into mongodb).
+
+Further details on GraphQL can be found on this [file](https://github.com/AlfaSierra92/GraphQL06/blob/release/Docs/GraphQL.md).
