@@ -65,8 +65,10 @@ public class ProductControllerImpl implements ProductController {
     @Override
     public Boolean deleteProduct(int productId) {
         LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
+        if (repository.findByProductId(productId).isEmpty()) {
+            throw new NotFoundException("No product found for productId: " + productId);
+        }
         repository.findByProductId(productId).ifPresent(e -> repository.delete(e));
-
         return Boolean.TRUE;
     }
 }
