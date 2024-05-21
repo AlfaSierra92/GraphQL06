@@ -171,6 +171,45 @@ On the other hand, if the query is processed correctly and there are no errors, 
 
 Therefore, when working with GraphQL, it is important to examine the content of the JSON response to determine whether the request was successful or not, rather than relying solely on the HTTP status code.
 
+**Exceptions handling**
+
+It is possible to enhance the response of wrong query in order to make it more verbose (e.g. *notfoundexception* in the case of an object not found instead of a generic one). It can be done by adding a custom exception resolver class (extending *DataFetcherExceptionResolverAdapter*) like this:
+```java
+@Component
+public class GraphQlCustomExceptionResolver extends DataFetcherExceptionResolverAdapter {
+
+    @Override
+    protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
+        if (ex instanceof NotFoundException) {
+            return GraphqlErrorBuilder.newError()
+                    .errorType(ErrorType.NOT_FOUND)
+                    .message(ex.getMessage())
+                    .path(env.getExecutionStepInfo().getPath())
+                    .location(env.getField().getSourceLocation())
+                    .build();
+        } else if (ex instanceof InvalidInputException) {
+            return GraphqlErrorBuilder.newError()
+                    .errorType(ErrorType.BAD_REQUEST)
+                    .message(ex.getMessage())
+                    .path(env.getExecutionStepInfo().getPath())
+                    .location(env.getField().getSourceLocation())
+                    .build();
+        } else if (ex instanceof BadRequestException) {
+            return GraphqlErrorBuilder.newError()
+                    .errorType(ErrorType.BAD_REQUEST)
+                    .message(ex.getMessage())
+                    .path(env.getExecutionStepInfo().getPath())
+                    .location(env.getField().getSourceLocation())
+                    .build();
+        }
+        else {
+            return null;
+        }
+    }
+}
+```
+where every exception returns a more verbose error. Obviously each exception will have to be declared separately (see attached code in the repository).
+
 ## Spring boot with GraphQL
 
 ### Implementation
