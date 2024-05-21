@@ -340,7 +340,7 @@ public class ProductControllerImpl implements ProductController {
 ```
 
 ### Requests
-**GraphiQL (for testing purpose)**
+#### GraphiQL (for testing purpose)
 
 Spring boot's GraphQL library provides a browser-accessible default endpoint for composing and testing queries and mutations. It can be enabled via *application.yml* file by adding this:
 ```yaml
@@ -352,17 +352,17 @@ spring:
 It can be changed via *path:* field.
 
 Here is an example:
+
 <img width="1278" alt="image" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/de34745f-bbbf-469c-86b9-58fbd171083c">
 It is advisable to use this mode only during development, as enabling this endpoint could potentially create security issues.
 
-
-**Postman**
+#### Postman
 
 With Postman, this is very simple, as it is already set up for GraphQL queries. By putting in the correct url, it will automatically retrieve the schema of objects, queries and mutations and allow the various queries to be composed intuitively.
 
-![Postman example](Postman.png)
+![Postman example](https://github.com/AlfaSierra92/GraphQL06/assets/4050967/66966d7b-37b7-4b63-b52c-3868c5128371)
 
-**cURL**
+#### cURL
 
 With it, the composition of requests is more laborious as one has to compose requests by hand:
 
@@ -382,7 +382,7 @@ With it, the composition of requests is more laborious as one has to compose req
     --data '{"query":"mutation { createProduct(input: { productId: 92, name: \"1111\", weight: 111 }) { productId name weight } }"}'
     ```
 
-**By code**
+#### By code
 
 Since the response of a GraphQL query is nothing more than a json-formatted body, you can parse it as you have always done in the case of REST.
 Here is an example of Java code:
