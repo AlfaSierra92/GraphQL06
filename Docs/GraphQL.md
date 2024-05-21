@@ -283,6 +283,7 @@ public class ProductControllerImpl implements ProductController {
 
 ### Requests
 **GraphiQL (for testing purpose)**
+
 Spring boot's GraphQL library provides a browser-accessible default endpoint for composing and testing queries and mutations. It can be enabled via *application.yml* file by adding this:
 ```yaml
 spring:
