@@ -282,6 +282,20 @@ public class ProductControllerImpl implements ProductController {
 ```
 
 ### Requests
+**GraphiQL (for testing purpose)**
+Spring boot's GraphQL library provides a browser-accessible default endpoint for composing and testing queries and mutations. It can be enabled via *application.yml* file by adding this:
+```yaml
+spring:
+    graphiql:
+        path: /graphiql
+        enabled: true
+```
+It can be changed via *path:* field.
+
+Here an example:
+<img width="1278" alt="image" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/de34745f-bbbf-469c-86b9-58fbd171083c">
+It is advisable to use this mode only during development, as enabling this endpoint could potentially create security issues.
+
 
 **Postman**
 
