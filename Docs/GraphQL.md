@@ -10,6 +10,8 @@ With GraphQL, the client sends a query describing the structure of the data it w
 
 In addition, GraphQL provides a strong typing system, which allows developers to clearly define the data structure and validate queries at compile time. This leads to better automatic API documentation and greater robustness in client and server code.
 
+Another advantage to using GraphQL is the lack of the need to provide for api versioning to allow, for example, legacy applications to run. This is because this query language only returns the data that’s explicitly requested, so new capabilities can be added via new types and new fields on those types without creating a breaking change.
+
 For example, if you want to obtain information about an individual user, you can send the query:
 ```
 query {
