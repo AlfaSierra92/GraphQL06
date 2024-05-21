@@ -293,7 +293,7 @@ spring:
 ```
 It can be changed via *path:* field.
 
-Here an example:
+Here is an example:
 <img width="1278" alt="image" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/de34745f-bbbf-469c-86b9-58fbd171083c">
 It is advisable to use this mode only during development, as enabling this endpoint could potentially create security issues.
 
@@ -323,7 +323,61 @@ With it, the composition of requests is more laborious as one has to compose req
     --header 'Content-Type: application/json' \
     --data '{"query":"mutation { createProduct(input: { productId: 92, name: \"1111\", weight: 111 }) { productId name weight } }"}'
     ```
-  
+
+**By code**
+
+Since the response of a GraphQL query is nothing more than a json-formatted body, you can parse it as you have always done in the case of REST.
+Here is an example of Java code:
+```java
+@Override
+    public Product getProduct(int productId) {
+        try {
+            // Query building
+            String query = "query { getProduct(productId: " + productId + ") { productId name weight serviceAddress } }";
+            // Query execution (the method is declared later)
+            ResponseEntity<String> response = sendGraphQLRequest(productServiceUrl, query, String.class);
+
+            // Waiting for response
+            String responseBody = response.getBody();
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(responseBody);
+
+            // Extracting values from JSON
+            JsonNode productNode = rootNode.path("data").path("getProduct");
+            if (productNode.isMissingNode()) { // In case of a missing product
+                throw new NotFoundException("No product found for productId: " + productId);
+            }
+            String name = productNode.path("name").asText();
+            int weight = productNode.path("weight").asInt();
+            String serviceAddress = productNode.path("serviceAddress").asText();
+
+            // Constructing Product object
+            Product product = new Product(productId, name, weight, serviceAddress);
+            LOG.debug("Found a product with id: {}", product.getProductId());
+            return product;
+// Various exceptions handling
+        } catch (HttpClientErrorException ex) {
+            throw handleHttpClientException(ex);
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+// Creating an http request, with the GraphQL query into the body
+private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class<T> responseType) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+
+        String requestBody = "{\"query\":\"" + query + "\"}";
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        return restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType);
+    }
+```
+
 ## Resources
 
 - [GraphQL](https://graphql.org/)
