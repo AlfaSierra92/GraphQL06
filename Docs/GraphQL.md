@@ -61,12 +61,12 @@ When this query is executed on the GraphQL server, a JSON object will be returne
 }
 ```
 
-In this answer:
+In this response:
 
 - We have a JSON object with a key **`data`**, which contains the data required by the query.
 - Within the object **`data`**, we have an object **`user`**, which contains information about the requested user.
 - The object **`user`** contains the properties **`id`**, **`name`**, **`email`** and **`age`**, which match the information of the user specified in the query.
-- The property **`posts`` is an array containing the user's post objects, each with fields **`title`** and **`body`**. In this case, we have two returned posts.
+- The property **`posts`** is an array containing the user's post objects, each with fields **`title`** and **`body`**. In this case, we have two returned posts.
 
 In the above example, the values of all parameters were requested; in case it wants only some of them (e.g., just the name), the answer will be:
 ```json
