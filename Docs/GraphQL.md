@@ -66,6 +66,25 @@ In this answer:
 - The object **`user`** contains the properties **`id`**, **`name`**, **`email`** and **`age`**, which match the information of the user specified in the query.
 - The property **`posts`` is an array containing the user's post objects, each with fields **`title`** and **`body`**. In this case, we have two returned posts.
 
+In the above example, the values of all parameters were requested; in case it wants only some of them (e.g., just the name), the answer will be:
+```json
+{
+  "data": {
+    "user": {
+      "name": "Mario Rossi"
+    }
+  }
+}
+```
+making the query:
+```
+query {
+  user(id: "123") {
+    name
+  }
+}
+```
+
 ## Technical explanation
 
 ### Schema
