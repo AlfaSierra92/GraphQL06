@@ -16,7 +16,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.OK;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GraphQLControllerTest {
+public class GraphQLControllerTest extends MongoDbTestBase{
 
     @Autowired private WebTestClient client;
 
