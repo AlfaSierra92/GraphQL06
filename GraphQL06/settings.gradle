@@ -1,4 +1,0 @@
-include ':api'
-include ':util'
-include ':microservices:product-service'
-include ':microservices:recommendation-service'
