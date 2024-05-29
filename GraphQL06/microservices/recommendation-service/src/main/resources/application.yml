@@ -29,6 +29,13 @@ spring:
       path: /graphiql
       enabled: true
 
+logging:
+  level:
+    root: INFO
+    se.magnus: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    org.springframework.graphql: TRACE
+
 server:
   port: 7002
 
