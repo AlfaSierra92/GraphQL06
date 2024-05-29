@@ -227,36 +227,9 @@ In order to implement correctly, there are a few steps to follow:
 
 ### 1. Inclusion of addictions
 
-**Gradle**
-
-In the file *build.gradle* enter *implementation 'org.springframework.boot:spring-boot-starter-graphql'* in order to have it similar to:
-
-```bash
-plugins {
-    id 'org.springframework.boot' version '2.6.4'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-}
-
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-graphql'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-```
-
 **Maven**
 
-In the case of Apache Maven, the file *pom.xml* must contain:
+Using Apache Maven, the file *pom.xml* must contain:
 ```xml
 <dependencies>
     <!-- Other dependencies -->
