@@ -550,14 +550,19 @@ private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class
 ```
 
 ## Try out the GraphQL endpoint
-To do that, you can clone the repository and build and run the project by launch the command `mvn spring-boot:run` in the project root folder.
+To do that, you can clone the repository and build and run the project inside IntelliJ IDEA by launching the command `mvn run` in the project root folder.
 
-You can also containerize and run the application by launching the commands  `docker compose up --build -d`.
-Then, you can use Postman or cURL to make requests to the endpoint as described above in the **Request** section.
+You can also containerize with Docker and run the application by launching, consecutively, the commands:
+1. `mvn clean` (useful in the case of a new build)
+2. `mvn package` (in order to create the jar files)
+3. `docker compose up --build -d` (to build and run the containers)
+4. `docker compose down` (to stop the containers).
+
+Then, you can use Postman, cURL or similar to make requests to the endpoint as described above in the **Request** section.
 
 Just remember to use the url 
 1. `http://localhost:7001/graphql` to access the product-service endpoint;
-2. `http://localhost:7001/graphql` to access the recommendation-service endpoint;
+2. `http://localhost:7002/graphql` to access the recommendation-service endpoint;
 
 for the requests.
 
