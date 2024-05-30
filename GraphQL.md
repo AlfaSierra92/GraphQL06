@@ -549,7 +549,19 @@ private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class
     }
 ```
 
-## Resources
+## Try out the GraphQL endpoint
+To do that, you can clone the repository and build and run the project by launch the command `mvn spring-boot:run` in the project root folder.
+
+You can also containerize and run the application by launching the commands  `docker compose up --build -d`.
+Then, you can use Postman or cURL to make requests to the endpoint as described above in the **Request** section.
+
+Just remember to use the url 
+1. `http://localhost:7001/graphql` to access the product-service endpoint;
+2. `http://localhost:7001/graphql` to access the recommendation-service endpoint;
+
+for the requests.
+
+## Resources and further details
 
 - [GraphQL](https://graphql.org/)
 - [Spring for GraphQL](https://spring.io/projects/spring-graphql)
