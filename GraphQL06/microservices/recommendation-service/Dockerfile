@@ -1,7 +1,8 @@
 FROM eclipse-temurin:17.0.5_8-jre-focal as builder
 WORKDIR extracted
-ADD ./build/libs/*.jar app.jar
-RUN java -Djarmode=layertools -jar app.jar extract
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} application.jar
+RUN java -Djarmode=layertools -jar application.jar extract
 
 FROM eclipse-temurin:17.0.5_8-jre-focal
 WORKDIR application
