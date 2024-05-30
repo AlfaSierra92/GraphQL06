@@ -48,12 +48,12 @@ When this query is executed on the GraphQL server, a JSON object will be returne
       "age": 30,
       "posts": [
         {
-          "title": "Il mio primo post",
-          "body": "Questo è il corpo del mio primo post."
+          "title": "My first post",
+          "body": "This is the body of my first post."
         },
         {
-          "title": "Secondo post",
-          "body": "Questo è il corpo del mio secondo post."
+          "title": "My second post",
+          "body": "This is the body of my second post."
         }
       ]
     }
@@ -84,6 +84,144 @@ query {
   user(id: "123") {
     name
   }
+}
+```
+
+### Bonus
+
+#### Aliases
+In GraphQL, aliases are used to request the same field or fields multiple times within a single query, but with different names for each occurrence. 
+This is particularly useful when you want to retrieve similar data from a GraphQL server but need to differentiate between them in the response.
+Anyway,  if any part of a query fails to execute successfully, the entire query will result in an error. 
+This is known as "all or nothing" behavior. So, when using aliases, it's important to ensure that each aliased field is valid and can be resolved successfully. Otherwise, the entire query will fail.
+Just for example, if you want to retrieve information about two products with different IDs, you can use aliases to differentiate between them in the response:
+```
+query GetProduct {
+    alias0: getProduct(productId: 111) {
+        productId
+        name
+        serviceAddress
+}
+
+    alias1: getProduct(productId: 112) {
+        productId
+        name
+        serviceAddress
+    }
+}
+```
+Here is the response:
+```json
+{
+  "data": {
+    "alias0": {
+      "productId": 111,
+      "name": "prodotto 111"
+    },
+    "alias1": {
+      "productId": 112,
+      "name": "prodotto 112"
+    }
+  }
+}
+```
+
+#### Fragments
+Fragments in GraphQL are like reusable units of fields. They allow you to define a set of fields that you can include in multiple queries, mutations, or other fragments.
+Here's a breakdown of how fragments work in GraphQL:
+```
+fragment ProductFields on Product {
+    productId
+    name
+    serviceAddress
+}
+```
+In this example, the fragment **`ProductFields`** defines a set of fields that can be included in queries or mutations that require information about a product. The **`on Product`** part specifies that the fragment applies to objects of type **`Product`**.
+To use the fragment in a query, you can include it like this:
+```
+query GetProduct {
+  getProduct(productId: 111) {
+    ...productFields
+  }
+}
+```
+
+#### Operations
+The operationName in GraphQL is an optional piece of metadata that you can include in your GraphQL requests. It's used to specify the name of the operation being performed within a multi-operation request.
+
+In GraphQL, you can send multiple operations (queries, mutations, or subscriptions) in a single request separated by curly braces {}. This is particularly useful when you want to fetch or mutate multiple sets of data in a single round trip to the server.
+Here's an example of a GraphQL request with multiple operations:
+```
+query PleaseGetProduct {
+  getProduct(productId: 111) {
+    productId
+    name
+    serviceAddress
+  }
+}
+```
+Will be possible to see *operationName* in some places, like in the GraphQL debug interface:
+```
+--- logs here ---
+    getProduct(productId: 112) {
+      productId
+      name
+      serviceAddress
+    }, 
+    operationName='PleaseGetProduct'
+--- others logs here ---
+```
+
+#### Variables
+Variables in GraphQL allow you to parameterize your queries, mutations, or subscriptions, making them dynamic and reusable. Instead of hardcoding values directly into your GraphQL operations, you can use variables to pass values from the client to the server at runtime.
+
+Here's how you can define and use variables in GraphQL:
+1. Define the variable in the query or mutation operation.
+  ```
+  query GetProduct($productId: ID!) {
+  product(id: $productId) {
+    name
+    price
+  }
+}
+ ```
+  You can define the default variable value by adding a colon and the default value after the type declaration:
+  ```
+    query GetProduct($productId: ID = "123") {
+    product(id: $productId) {
+        name
+        price
+        } 
+    }
+  ```
+
+2. Pass the variable values when executing the operation.
+  ```
+  {
+  "productId": "123"
+}
+  ```
+Using variables in GraphQL provides several benefits:
+- **Dynamic Queries**: Variables allow you to construct dynamic queries based on user input or other runtime conditions. 
+- **Security**: Using variables helps protect against injection attacks, as values are passed separately from the query string. 
+- **Query Reusability**: By parameterizing your queries, mutations, or subscriptions, you can reuse them with different input values, improving code maintainability and reducing duplication.
+
+#### Directives
+Directives in GraphQL are used to conditionally include or exclude fields or fragments in a query based on certain conditions. They provide a way to control the execution of a query and customize the response based on the client's requirements.
+Here is an example of how you can use directives in a GraphQL query:
+```
+query GetProduct($includeServiceAddress: Boolean!) {
+  product(id: "123") {
+    name
+    price
+    serviceAddress @include(if: $includeServiceAddress)
+  }
+}
+```
+In this query, the **`@include`** directive is used to conditionally include the **`serviceAddress`** field based on the value of the **`includeServiceAddress`** variable. If the variable is **`true`**, the **`serviceAddress`** field will be included in the response; otherwise, it will be excluded.
+```
+{
+    "$includeServiceAddress": true
 }
 ```
 
@@ -132,8 +270,9 @@ In this example:
 - An object type was defined: Product, which represents products in the system.
 - Each object type has fields representing the properties of that object; with their respective types (integer, string, etc.). The "!" symbol in a GraphQL schema indicates that a field is mandatory, i.e. it must always have a value when returned by the GraphQL server. If a field has the "!" symbol, it means that it cannot be null and must be included in the query result. The usage of the square brackets around type show that the object returned is a List.
 - The **`Input`** is a data type used to define the structure of input parameters for mutations. Mutations are operations that modify or update data in the GraphQL server, such as creating a new user or editing a post.
-- The type **`Query`** defines the available read operations (queries), such as getProduct, which returns the details of the product having that specific *productId*.
+- The type **`Query`** defines the available read operations (queries), such as getProduct, which returns the details of the product having that specific *productId*. It is similar to the GET method in REST.
 - The **`Mutation`** in GraphQL are operations that allow data to be modified on the server. Whereas queries are used to read data, mutations allow data to be created, modified or deleted in the system; they take as input the parameters defined within the round brackets and return the values of the type defined after the symbol ":"; again the presence of the symbol "!" symbol means that after the operation is executed, it must return something other than *null*. Mutations are defined within the GraphQL schema just like queries, but are annotated with the type **`Mutation`** instead of **`Query`**.
+It works like the POST, PUT, PATCH and DELETE methods in REST.
 
 ### Responses
 
