@@ -301,28 +301,17 @@ if [ "$http_code" -eq 200 ]; then
         error_message=$(echo "$body" | grep -o '"message":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         echo "Error retrieving recommendation: $error_message"
     else
-            # Extract JSON values manually
-            recommendation_list=$(echo "$body" | jq -r '.data.getRecommendations')
-            recommendation_count=$(echo "$recommendation_list" | jq -r 'length')
+        # Extract JSON values manually
+        recommendationId=$(echo "$body" | grep -o '"recommendationId":[0-9]*' | cut -d':' -f2)
+        productId=$(echo "$body" | grep -o '"productId":[0-9]*' | cut -d':' -f2)
+        content=$(echo "$body" | grep -o '"content":"[^"]*"' | cut -d':' -f2 | tr -d '"')
 
-            echo "Recommendations retrieved successfully:"
-            echo "Total recommendations: $recommendation_count"
-
-            # Loop through each recommendation
-            for ((i=0; i<recommendation_count; i++)); do
-                recommendation=$(echo "$recommendation_list" | jq -r ".[$i]")
-                recommendationId=$(echo "$recommendation" | jq -r '.recommendationId')
-                productId=$(echo "$recommendation" | jq -r '.productId')
-                content=$(echo "$recommendation" | jq -r '.content')
-
-                echo "Recommendation $((i+1)):"
-                echo "ID: $recommendationId"
-                echo "Product ID: $productId"
-                echo "Content: $content"
-                echo ""
-            done
-            echo "----------TEST OK----------"
-        fi
+        echo "Recommendation details:"
+        echo "ID: $recommendationId"
+        echo "Product ID: $productId"
+        echo "content: $content"
+        echo "----------TEST OK----------"
+    fi
 else
     echo "Error retrieving recommendation. HTTP Code: $http_code"
     echo "Server response:"
