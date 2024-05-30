@@ -86,8 +86,9 @@ query {
   }
 }
 ```
+For the moment, we will focus on the basic concepts of GraphQL also by using examples with queries, and then we will move on to the technical aspects of its implementation.
 
-### Bonus
+### Basic concepts
 
 #### Aliases
 In GraphQL, aliases are used to request the same field or fields multiple times within a single query, but with different names for each occurrence. 
