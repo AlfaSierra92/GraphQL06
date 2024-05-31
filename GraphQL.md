@@ -670,7 +670,7 @@ With it, the composition of requests is more laborious as one has to compose req
 #### By code
 
 Since the response of a GraphQL query is nothing more than a json-formatted body, you can parse it as you have always done in the case of REST.
-Here is an example of Java code:
+Here is an example of Java code to do query and json response parsing:
 ```java
 @Override
     public Product getProduct(int productId) {
@@ -708,7 +708,7 @@ Here is an example of Java code:
         }
     }
 
-// Creating an http request, with the GraphQL query into the body
+// Creating a http request, with the GraphQL query into the body
 private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class<T> responseType) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
