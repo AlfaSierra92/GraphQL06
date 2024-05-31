@@ -550,6 +550,10 @@ private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class
 ```
 
 ## Try out the GraphQL endpoint
+In this repository, there are two services that can be used to test the GraphQL endpoint: the *product-service* and the *recommendation-service*.
+The first one is used to manage products, while the second one is used to manage recommendations. They work in a similar way, but with different objects and queries.
+The GraphQL API specification can be retrieved by using a simple GraphQL client like Postman, cURL or by using the GraphiQL interface (if you want to do just a walkthrough with APIs).
+
 To do that, you can clone the repository and build and run the project inside IntelliJ IDEA by launching the command `mvn run` in the project root folder.
 
 You can also containerize with Docker and run the application by launching, consecutively, the commands:
@@ -558,13 +562,17 @@ You can also containerize with Docker and run the application by launching, cons
 3. `docker compose up --build -d` (to build and run the containers)
 4. `docker compose down` (to stop the containers).
 
-Then, you can use Postman, cURL or similar to make requests to the endpoint as described above in the **Request** section.
+Then, you can make requests to the endpoint as described above in the **Request** section.
 
-Just remember to use the url 
-1. `http://localhost:7001/graphql` to access the product-service endpoint;
-2. `http://localhost:7002/graphql` to access the recommendation-service endpoint;
+For Postman, cURL or similar, just remember to use the url 
+1. [http://localhost:7001/graphql](http://localhost:7001/graphql) to access the product-service endpoint;
+2. [http://localhost:7002/graphql](http://localhost:7002/graphql)  to access the recommendation-service endpoint;
 
 for the requests.
+
+If you want to use the GraphiQL interface, instead of external applications, you can access it by using the url:
+1. [http://localhost:7001/graphiql](http://localhost:7001/graphiql)  to access the product-service endpoint;
+2. [http://localhost:7002/graphiql](http://localhost:7002/graphiql)  to access the recommendation-service endpoint;
 
 ## Resources and further details
 
