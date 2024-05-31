@@ -352,6 +352,178 @@ public class GraphQlCustomExceptionResolver extends DataFetcherExceptionResolver
 ```
 where every exception returns a more verbose error. Obviously each exception will have to be declared separately (see attached code in the repository).
 
+### GraphQL vs REST
+Here is a quick overview of the differences between GraphQL and REST API in English:
+
+#### REST API
+1. Architecture:
+   - Based on resources identified by URLs. 
+   - Uses standard HTTP methods like GET, POST, PUT, DELETE.
+
+2. Requests:
+   - Each endpoint is tied to a specific resource.
+   - Responses are often fixed and can include unnecessary data.
+
+3. Scalability:
+   - Simpler to implement for straightforward APIs.
+   - Can become complex with the increase in resources and relationships between them.
+
+4. Versioning:
+   - Often requires versioning of the API to manage changes (e.g., /v1/users, /v2/users).
+
+5. Caching:
+   - Excellent cache management due to standard HTTP methods.
+
+#### GraphQL
+1. Architecture:
+    - Based on a single endpoint for all requests.
+    - Allows defining exactly what data is required in the query.
+
+2. Requests:
+    - Clients can specify exactly what data they want, reducing unnecessary data.
+    - More flexible, as a single query can request data from multiple resources with one call.
+
+3. Scalability:
+    - Can handle complex relationships between data without needing specific endpoints.
+    - Requires more initial planning to define the data schema.
+
+4. Versioning:
+    - Does not require API versioning, as changes can be managed through the schema without breaking existing queries.
+   
+5. Caching:
+    - Cache management is more complex, requiring specific techniques and tools (e.g., client-side persistence).
+
+#### Key Differences
+- Flexibility: GraphQL offers greater flexibility in data requests compared to REST, which has more rigid responses. 
+- Request Efficiency: GraphQL can reduce the number of requests needed to obtain all the required data, while REST may require multiple API calls. 
+- Response Structure: With GraphQL, responses are exactly what was requested, while REST often includes unnecessary fields. 
+- Implementation Complexity: REST can be simpler to implement for basic APIs, while GraphQL may require more initial planning but offers advantages for more complex APIs.
+
+In summary, GraphQL is often preferred for modern and complex applications that require flexible and efficient data interaction, while REST remains a solid choice for simpler APIs with a less dynamic data model.
+
+#### Comparison between GraphQL requests and REST requests
+##### GET Request example
+Here is a comparison between a GraphQL request and a REST request to obtain the same information:
+- **GraphQL request**:
+    ```graphql
+    query GetProduct {
+        getProduct(productId: 123) {
+            productId
+            name
+            weight
+            serviceAddress
+        }
+    }
+    ```
+  The response will be:
+    ```json
+    {
+        "data": {
+            "getProduct": {
+                "productId": 123,
+                "name": "Product Name",
+                "weight": 100,
+                "serviceAddress": "127.0.0.1"
+            }
+        }
+    }
+    ```
+- **REST request**:
+    ```bash
+    GET /products/123
+    ```
+    The response will be:
+
+    ```json
+        {
+            "productId": 123,
+            "name": "Product Name",
+            "weight": 100,
+            "serviceAddress": "127.0.0.1"
+        }
+    ```
+
+In the REST request, the client sends a GET request to the `/products/123` endpoint to retrieve information about the product with ID 123. The server responds with a JSON object containing all the product details.
+Differently from the REST request, the GraphQL request allows the client to specify exactly what information it wants to retrieve about the product, including only the fields it needs, such as the product ID, name, weight, and service address.
+To be noted that in the REST request we have to personalize the url in order to obtain the desired information, while in the GraphQL request we can obtain the same information just by changing the query.
+
+##### POST Request example
+Here is a comparison between a GraphQL request and a REST request to create a new product:
+- **GraphQL request**:
+    ```graphql
+    mutation CreateProduct {
+        createProduct(input: { productId: 123, name: "Product Name", weight: 100 }) {
+            productId
+            name
+            weight
+        }
+    }
+    ```
+  The response will be:
+    ```json
+    {
+        "data": {
+            "createProduct": {
+                "productId": 123,
+                "name": "Product Name",
+                "weight": 100
+            }
+        }
+    }
+    ```
+- **REST request**:
+    ```bash
+    POST /products
+    {
+        "productId": 123,
+        "name": "Product Name",
+        "weight": 100
+    }
+    ```
+    The response will be:
+
+    ```json
+    {
+        "productId": 123,
+        "name": "Product Name",
+        "weight": 100
+    }
+    ```
+In the REST request, the client sends a POST request to the `/products` endpoint with the product details in the request body to create a new product. The server responds with a JSON object containing the details of the newly created product.
+In the GraphQL request, the client sends a mutation operation to create a new product with the specified details. The server responds with a JSON object containing the details of the newly created product.
+
+##### DELETE Request example
+Here is a comparison between a GraphQL request and a REST request to delete a product:
+- **GraphQL request**:
+    ```graphql
+    mutation DeleteProduct {
+        deleteProduct(productId: 123)
+    }
+    ```
+  The response will be:
+    ```json
+    {
+        "data": {
+            "deleteProduct": true
+        }
+    }
+    ```
+- **REST request**:
+    ```bash
+    DELETE /products/123
+    ```
+    The response will be:
+
+    ```json
+    {
+        "success": true
+    }
+    ```
+In the REST request, the client sends a DELETE request to the `/products/123` endpoint to delete the product with ID 123. The server responds with a JSON object indicating the success of the deletion operation.
+In the GraphQL request, the client sends a mutation operation to delete the product with the specified ID. The server responds with a JSON object indicating the success of the deletion operation.
+
+Note that with graphql we always use the same endpoint using the same HTTP method (POST), unlike the REST API where a different method is used for each type of request: GET for query, POST for inserting, and DELETE to deleting.
+
 ## Spring boot with GraphQL
 
 ### Implementation
