@@ -13,6 +13,8 @@
         <module>util</module>
         <module>microservices/product-service</module>
         <module>microservices/recommendation-service</module>
+        <module>microservices/review-service</module>
+        <module>microservices/product-composite-service</module>
     </modules>
 
     <properties>
