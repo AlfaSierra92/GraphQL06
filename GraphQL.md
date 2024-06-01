@@ -1,6 +1,6 @@
 # GraphQL
 
-## Introduction
+## Theory introduction
 
 GraphQL is a query language for APIs (Application Programming Interfaces), developed by Facebook in 2012 and made open-source in 2015.
 
@@ -94,9 +94,27 @@ For the moment, we will focus on the basic concepts of GraphQL also by using exa
 In GraphQL, queries are used to retrieve data from the server, while mutations are used to modify or create data on the server. Both queries and mutations are defined in the GraphQL schema and can be executed by clients to interact with the server.
 The main difference between queries and mutations is that queries are read-only operations that do not modify the server's state, while mutations are write operations that can modify the server's state. 
 The syntax for queries and mutations is similar, but they are distinguished by the operation keyword at the beginning of the request:
-- **Query**: Used to retrieve data from the server.
-- **Mutation**: Used to modify or create data on the server.
-
+- **Query**: Used to retrieve data from the server; we have talked about it in the previous section.
+- **Mutation**: Used to modify or create data on the server. An example can be:
+    ```
+    mutation {
+        createUser(name: "Alice", email: "alice@mail.com") {
+            id
+            name
+            email
+        }
+    }
+    ```
+    Note the *Data mutations and after fetch* principle: after a mutation, the server returns the data that was modified or created. This allows the client to update its local cache or UI based on the server's response.
+    If we don't want to return anything, we can use the keyword *void*:
+    ```
+    mutation {
+        deleteUser(id: "123") {
+            void
+        }
+    }
+    ```
+    In this case, the server will delete the user with the specified ID and return nothing.
 
 #### Aliases
 In GraphQL, aliases are used to request the same field or fields multiple times within a single query, but with different names for each occurrence. 
@@ -125,11 +143,11 @@ Here is the response:
   "data": {
     "alias0": {
       "productId": 111,
-      "name": "prodotto 111"
+      "name": "product 111"
     },
     "alias1": {
       "productId": 112,
-      "name": "prodotto 112"
+      "name": "product 112"
     }
   }
 }
@@ -377,51 +395,51 @@ public class GraphQlCustomExceptionResolver extends DataFetcherExceptionResolver
 where every exception returns a more verbose error. Obviously each exception will have to be declared separately (see attached code in the repository).
 
 ### GraphQL vs REST
-Here is a quick overview of the differences between GraphQL and REST API in English:
+Here is a quick overview of the differences between GraphQL and REST API:
 
 #### REST API
-1. Architecture:
+1. **Architecture**:
    - Based on resources identified by URLs. 
    - Uses standard HTTP methods like GET, POST, PUT, DELETE.
 
-2. Requests:
+2. **Requests**:
    - Each endpoint is tied to a specific resource.
    - Responses are often fixed and can include unnecessary data.
 
-3. Scalability:
+3. **Scalability**:
    - Simpler to implement for straightforward APIs.
    - Can become complex with the increase in resources and relationships between them.
 
-4. Versioning:
+4. **Versioning**:
    - Often requires versioning of the API to manage changes (e.g., /v1/users, /v2/users).
 
-5. Caching:
+5. **Caching**:
    - Excellent cache management due to standard HTTP methods.
 
 #### GraphQL
-1. Architecture:
+1. **Architecture**:
     - Based on a single endpoint for all requests.
     - Allows defining exactly what data is required in the query.
 
-2. Requests:
+2. **Requests**:
     - Clients can specify exactly what data they want, reducing unnecessary data.
     - More flexible, as a single query can request data from multiple resources with one call.
 
-3. Scalability:
+3. **Scalability**:
     - Can handle complex relationships between data without needing specific endpoints.
     - Requires more initial planning to define the data schema.
 
-4. Versioning:
+4. **Versioning**:
     - Does not require API versioning, as changes can be managed through the schema without breaking existing queries.
    
-5. Caching:
+5. **Caching**:
     - Cache management is more complex, requiring specific techniques and tools (e.g., client-side persistence).
 
 #### Key Differences
-- Flexibility: GraphQL offers greater flexibility in data requests compared to REST, which has more rigid responses. 
-- Request Efficiency: GraphQL can reduce the number of requests needed to obtain all the required data, while REST may require multiple API calls. 
-- Response Structure: With GraphQL, responses are exactly what was requested, while REST often includes unnecessary fields. 
-- Implementation Complexity: REST can be simpler to implement for basic APIs, while GraphQL may require more initial planning but offers advantages for more complex APIs.
+- **Flexibility**: GraphQL offers greater flexibility in data requests compared to REST, which has more rigid responses. 
+- **Request Efficiency**: GraphQL can reduce the number of requests needed to obtain all the required data, while REST may require multiple API calls. 
+- **Response Structure**: With GraphQL, responses are exactly what was requested, while REST often includes unnecessary fields. 
+- **Implementation Complexity**: REST can be simpler to implement for basic APIs, while GraphQL may require more initial planning but offers advantages for more complex APIs.
 
 In summary, GraphQL is often preferred for modern and complex applications that require flexible and efficient data interaction, while REST remains a solid choice for simpler APIs with a less dynamic data model.
 
@@ -469,6 +487,27 @@ Here is a comparison between a GraphQL request and a REST request to obtain the 
 
 In the REST request, the client sends a GET request to the `/products/123` endpoint to retrieve information about the product with ID 123. The server responds with a JSON object containing all the product details.
 Differently from the REST request, the GraphQL request allows the client to specify exactly what information it wants to retrieve about the product, including only the fields it needs, such as the product ID, name, weight, and service address.
+For example, we could be request just a single field:
+
+```graphql
+    query GetProduct {
+        getProduct(productId: 123) {
+            name
+        }
+    }
+```
+  The response will be:
+
+```json
+    {
+        "data": {
+            "getProduct": {
+                "name": "Product Name"
+            }
+        }
+    }
+```
+
 To be noted that in the REST request we have to personalize the url in order to obtain the desired information, while in the GraphQL request we can obtain the same information just by changing the query.
 
 ##### POST Request example
@@ -514,7 +553,7 @@ Here is a comparison between a GraphQL request and a REST request to create a ne
     }
     ```
 In the REST request, the client sends a POST request to the `/product` endpoint with the product details in the request body to create a new product. The server responds with a JSON object containing the details of the newly created product.
-In the GraphQL request, the client sends a mutation operation to create a new product with the specified details. The server responds with a JSON object containing the details of the newly created product.
+In the GraphQL request, the client sends a mutation operation to create a new product with the specified details. The server responds with a JSON object containing the details of the newly created product (all of them or just a few).
 
 ##### DELETE Request example
 Here is a comparison between a GraphQL request and a REST request to delete a product:
@@ -548,7 +587,7 @@ In the GraphQL request, the client sends a mutation operation to delete the prod
 
 Note that with graphql we always use the same endpoint using the same HTTP method (POST), unlike the REST API where a different method is used for each type of request: GET for query, POST for inserting, and DELETE to deleting.
 
-## Spring boot with GraphQL
+## Code section: Spring boot with GraphQL
 
 ### Implementation
 
@@ -749,7 +788,7 @@ private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class
 ```
 For the complete code, see it in the repository (*GraphQL06* folder).
 
-## Try out the GraphQL endpoint
+## How-to: try out the GraphQL endpoint
 In this repository, there are four services that can be used to test the GraphQL endpoint: 
 - **product-service**: for product retrieval, insertion and deletion;
 - **recommendation-service**: for recommendation retrieval, insertion and deletion;
