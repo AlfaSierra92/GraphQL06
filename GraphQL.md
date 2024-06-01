@@ -561,7 +561,7 @@ In order to implement correctly, there are a few steps to follow:
 3. Enabling the graphql endpoint in the file *application.yml*.
 4. The creation of the controller interface and its implementation
 
-### 1. Inclusion of addictions
+#### 1. Inclusion of addictions
 
 **Maven**
 
@@ -578,13 +578,13 @@ Using Apache Maven, the file *pom.xml* must contain:
 
 ```
 
-### 2. Schema definition.graphqls
+#### 2. Schema definition.graphqls
 
 In order to define the objects, we must create the file, with the extension `*.graphqls`, which must be placed in the path `src/main/java/resources/graphql`.
 
 There shall be a single schema file within the folder; it is possible to split them in the case of defining different schemas for different applications that draw from the same *resources* folder by creating subfolders and defining this in the respective *application.yml (see later).*
 
-### 3. Enabling graphQL endpoints
+#### 3. Enabling graphQL endpoints
 
 It is then necessary to enable the endpoint by entering the correct entries in the file *application.yml*:
 
@@ -614,7 +614,7 @@ spring:
                path: /api/projects/graphql
 ```
 
-### 4. Java interface definition and implementation
+#### 4. Java interface definition and implementation
 
 - **Controller Interface**:
 
