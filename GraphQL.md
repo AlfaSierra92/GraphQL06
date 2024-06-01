@@ -761,11 +761,10 @@ The GraphQL API specification can be retrieved by using a simple GraphQL client 
 
 To try out, you can clone the repository and build and run the project inside IntelliJ IDEA by launching the command `mvn run` in the project root folder.
 
-You can also containerize with Docker and run the microservices by launching, consecutively, the commands:
+You can also containerize with Docker and run the microservices by launching, consecutively, the commands (always in the project root folder):
 1. `mvn clean` (useful in the case of a new build)
 2. `mvn package` (in order to create the jar files)
-3. `docker compose up --build -d` (to build and run the containers)
-4. `docker compose down` (to stop the containers).
+3. `docker compose up --build -d` (to build and run the containers).
 
 Then, you can make requests to the endpoint as described above in the **Request** section.
 
@@ -777,6 +776,8 @@ For Postman, cURL or similar, just remember to use the url
 
 for the requests. 
 If you want to use the GraphiQL interface, instead of external applications, you can access it by using the same urls but changing the endpoint name to *graphiql* (e.g., [http://localhost:7001/graphiql](http://localhost:7001/graphiql)).
+
+To stop the services, just launch the command `docker compose down` in the project root folder.
 
 ## Resources and further details
 
