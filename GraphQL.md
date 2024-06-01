@@ -755,12 +755,13 @@ In this repository, there are four services that can be used to test the GraphQL
 - **recommendation-service**: for recommendation retrieval, insertion and deletion;
 - **review-service**: for review retrieval, insertion and deletion;
 - **product-composite-service**: for product retrieval along with its own recommendations and reviews (if them are available).
+
 All of them work in a similar way, but with different objects, queries and mutations, obviously.
 The GraphQL API specification can be retrieved by using a simple GraphQL client like Postman, cURL (by the *introspection* query) or by using the GraphiQL interface (if you want to do just a walkthrough with APIs).
 
-To do that, you can clone the repository and build and run the project inside IntelliJ IDEA by launching the command `mvn run` in the project root folder.
+To try out, you can clone the repository and build and run the project inside IntelliJ IDEA by launching the command `mvn run` in the project root folder.
 
-You can also containerize with Docker and run the application by launching, consecutively, the commands:
+You can also containerize with Docker and run the microservices by launching, consecutively, the commands:
 1. `mvn clean` (useful in the case of a new build)
 2. `mvn package` (in order to create the jar files)
 3. `docker compose up --build -d` (to build and run the containers)
@@ -769,14 +770,13 @@ You can also containerize with Docker and run the application by launching, cons
 Then, you can make requests to the endpoint as described above in the **Request** section.
 
 For Postman, cURL or similar, just remember to use the url 
-1. [http://localhost:7001/graphql](http://localhost:7001/graphql) to access the product-service endpoint;
-2. [http://localhost:7002/graphql](http://localhost:7002/graphql)  to access the recommendation-service endpoint;
+1. [http://localhost:7001/graphql](http://localhost:7001/graphql) to access the *product-service* endpoint;
+2. [http://localhost:7002/graphql](http://localhost:7002/graphql)  to access the *recommendation-service* endpoint;
+3. [http://localhost:7003/graphql](http://localhost:7003/graphql)  to access the *review-service* endpoint;
+4. [http://localhost:6999/graphql](http://localhost:6999/graphql)  to access the *product-composite-service* endpoint.
 
-for the requests.
-
-If you want to use the GraphiQL interface, instead of external applications, you can access it by using the url:
-1. [http://localhost:7001/graphiql](http://localhost:7001/graphiql)  to access the product-service endpoint;
-2. [http://localhost:7002/graphiql](http://localhost:7002/graphiql)  to access the recommendation-service endpoint;
+for the requests. 
+If you want to use the GraphiQL interface, instead of external applications, you can access it by using the same urls but changing the endpoint name to *graphiql* (e.g., [http://localhost:7001/graphiql](http://localhost:7001/graphiql)).
 
 ## Resources and further details
 
