@@ -651,7 +651,7 @@ With Postman, this is very simple, as it is already set up for GraphQL queries. 
 
 With it, the composition of requests is more laborious as one has to compose requests by hand:
 
-- **Query di interrogazione**:
+- **Query**:
 
     ```bash
     curl --location '127.0.0.1:7001/graphql' \
@@ -659,13 +659,16 @@ With it, the composition of requests is more laborious as one has to compose req
     --data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight serviceAddress } }"}'
     ```
 
-- **Query di inserimento (*mutation*)**:
+- **Mutation (*Input query*)**:
 
     ```bash
     curl --location '127.0.0.1:7001/graphql' \
     --header 'Content-Type: application/json' \
     --data '{"query":"mutation { createProduct(input: { productId: 92, name: \"1111\", weight: 111 }) { productId name weight } }"}'
     ```
+
+The request itself is nothing more than a JSON object with the query or mutation to be executed; the keyword *query* at the beginning of the object is mandatory, regardless of the type of request.
+
 
 #### By code
 
@@ -681,6 +684,7 @@ Here is an example of Java code to do query and json response parsing:
             ResponseEntity<String> response = sendGraphQLRequest(productServiceUrl, query, String.class);
 
             // Waiting for response
+            
             String responseBody = response.getBody();
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(responseBody);
