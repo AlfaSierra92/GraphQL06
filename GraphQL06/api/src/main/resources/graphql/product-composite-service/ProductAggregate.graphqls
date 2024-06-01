@@ -20,21 +20,7 @@ type RecommendationSummary {
     content: String!
 }
 
-input RecommendationSummaryInput {
-    recommendationId: Int!
-    author: String!
-    rate: Int!
-    content: String!
-}
-
 type ReviewSummary {
-    reviewId: Int!
-    author: String!
-    subject: String!
-    content: String!
-}
-
-input ReviewSummaryInput {
     reviewId: Int!
     author: String!
     subject: String!
@@ -48,18 +34,6 @@ type ServiceAddresses {
     rec: String
 }
 
-input ServiceAddressesInput {
-    cmp: String
-    pro: String
-    rev: String
-    rec: String
-}
-
 type Query {
     getProductAggregate(productId: Int!): ProductAggregate!
-}
-
-type Mutation {
-    createProductAggregate(body: ProductAggregateInput!): ProductAggregate
-    deleteProductAggregate(productId: Int!): Boolean
 }

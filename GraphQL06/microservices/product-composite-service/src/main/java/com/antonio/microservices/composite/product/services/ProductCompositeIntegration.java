@@ -97,6 +97,9 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     public Product getProduct(int productId) {
         try {
             String query = "query { getProduct(productId: " + productId + ") { productId name weight serviceAddress } }";
+
+            // Sending the request using sendGraphQLRequest method
+            // It uses RestTemplate: a synchronous client to perform HTTP requests
             ResponseEntity<String> response = sendGraphQLRequest(productServiceUrl, query, String.class);
 
             String responseBody = response.getBody();
@@ -146,7 +149,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     }
 
     public Recommendation createRecommendation(Recommendation body) {
-        throw new UnsupportedOperationException("Creating a recommendation via GraphQL is not supported.");
+        throw new UnsupportedOperationException("Creating a recommendation via this microservice is not supported. Use the recommendation service directly");
     }
 
     public List<Recommendation> getRecommendations(int productId) {
@@ -183,11 +186,11 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     }
 
     public void deleteRecommendations(int productId) {
-        throw new UnsupportedOperationException("Deleting recommendations via GraphQL is not supported.");
+        throw new UnsupportedOperationException("Deleting a recommendation via this microservice is not supported. Use the recommendation service directly.");
     }
 
     public Review createReview(Review body) {
-        throw new UnsupportedOperationException("Creating a review via GraphQL is not supported.");
+        throw new UnsupportedOperationException("Creating a review via this microservice is not supported. Use the review service directly.");
     }
 
     public List<Review> getReviews(int productId) {
@@ -225,18 +228,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     }
 
     public void deleteReviews(int productId) {
-        throw new UnsupportedOperationException("Deleting reviews via GraphQL is not supported.");
-    }
-
-    private <T> ResponseEntity<T> sendGraphQLRequest_mutation(String url, String query, Class<T> responseType) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
-
-        String requestBody = "{\"query\":\"" + query + "\"}";
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-
-        return restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType);
+        throw new UnsupportedOperationException("Deleting a review via this microservice is not supported. Use the review service directly.");
     }
 
     private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class<T> responseType) {

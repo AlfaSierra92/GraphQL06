@@ -35,10 +35,4 @@ public interface ProductCompositeController {
      */
     @QueryMapping
     public ProductAggregate getProductAggregate(@Argument int productId);
-
-    @MutationMapping
-    public Product createProductAggregate(@Argument Product body);
-
-    @MutationMapping
-    public Boolean deleteProductAggregate(@Argument int productId);
 }

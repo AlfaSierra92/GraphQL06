@@ -30,25 +30,6 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
         this.integration = integration;
     }
 
-    @Override
-    public Product createProductAggregate(@Argument Product body) {
-
-        try {
-
-            LOG.debug("createCompositeProduct: creates a new composite entity for productId: {}", body.getProductId());
-
-            Product product = new Product(body.getProductId(), body.getName(), body.getWeight(), null);
-            integration.createProduct(product);
-
-            LOG.debug("createCompositeProduct: composite entities created for productId: {}", body.getProductId());
-
-        } catch (RuntimeException re) {
-            LOG.warn("createCompositeProduct failed", re);
-            throw re;
-        }
-        return body;
-    }
-
 
     @Override
     public ProductAggregate getProductAggregate(@Argument int productId) {
@@ -69,17 +50,7 @@ public class ProductCompositeControllerImpl implements ProductCompositeControlle
         return createProductAggregate_1(product, recommendations, reviews, serviceUtil.getServiceAddress());
     }
 
-    @Override
-    public Boolean deleteProductAggregate(int productId) {
-
-        LOG.debug("deleteCompositeProduct: Deletes a product aggregate for productId: {}", productId);
-
-        integration.deleteProduct(productId);
-
-        LOG.debug("deleteCompositeProduct: aggregate entities deleted for productId: {}", productId);
-        return Boolean.TRUE;
-    }
-
+    // Create ProductAggregate from the product, recommendations, and reviews to show them all together
     private ProductAggregate createProductAggregate_1(
             Product product,
             List<Recommendation> recommendations,
