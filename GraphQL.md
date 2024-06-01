@@ -747,7 +747,7 @@ private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class
         return restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType);
     }
 ```
-For the complete code, see the attached code in the repository.
+For the complete code, see it in the repository (*GraphQL06* folder).
 
 ## Try out the GraphQL endpoint
 In this repository, there are four services that can be used to test the GraphQL endpoint: 
