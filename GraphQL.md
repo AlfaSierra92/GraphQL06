@@ -90,6 +90,14 @@ For the moment, we will focus on the basic concepts of GraphQL also by using exa
 
 ### Basic concepts
 
+#### Queries & Mutations
+In GraphQL, queries are used to retrieve data from the server, while mutations are used to modify or create data on the server. Both queries and mutations are defined in the GraphQL schema and can be executed by clients to interact with the server.
+The main difference between queries and mutations is that queries are read-only operations that do not modify the server's state, while mutations are write operations that can modify the server's state. 
+The syntax for queries and mutations is similar, but they are distinguished by the operation keyword at the beginning of the request:
+- **Query**: Used to retrieve data from the server.
+- **Mutation**: Used to modify or create data on the server.
+
+
 #### Aliases
 In GraphQL, aliases are used to request the same field or fields multiple times within a single query, but with different names for each occurrence. 
 This is particularly useful when you want to retrieve similar data from a GraphQL server but need to differentiate between them in the response.
@@ -225,6 +233,22 @@ In this query, the **`@include`** directive is used to conditionally include the
     "$includeServiceAddress": true
 }
 ```
+
+#### Introspection query
+The introspection query is a special query in GraphQL that allows you to query the schema of a GraphQL server to retrieve information about the types, fields, and directives defined in the schema. This can be useful for exploring the capabilities of a GraphQL API, generating documentation, or building tools that work with GraphQL schemas.
+Some application like Postman uses this query in advance to retrieve the schema of the API and to allow the user to compose queries and mutations in an intuitive way.
+
+It is possible to do this query, by cURL for example, by sending the attached JSON body file *introspection_query.json* (omitted in this text for readability reasons because is very long) to the desired endpoint (e.g., *http://localhost:7001/graphql*) by the command:
+```bash
+curl --location --request POST 'http://localhost:7001/graphql' \
+--header 'Content-Type: application/json' \
+-d @introspection_query.json
+```
+The response is also omitted for brevity because can be really verbose.
+
+Obviously, using this kind of method is a little bit cumbersome, so it is advisable to not use it.
+This query will return a JSON object containing information about the schema of the GraphQL server, including the query type, mutation type, subscription type, types, and directives defined in the schema.
+
 
 ## Technical explanation
 
@@ -430,7 +454,7 @@ Here is a comparison between a GraphQL request and a REST request to obtain the 
     ```
 - **REST request**:
     ```bash
-    GET /products/123
+    GET /product/123
     ```
     The response will be:
 
@@ -473,7 +497,7 @@ Here is a comparison between a GraphQL request and a REST request to create a ne
     ```
 - **REST request**:
     ```bash
-    POST /products
+    POST /product
     {
         "productId": 123,
         "name": "Product Name",
@@ -489,7 +513,7 @@ Here is a comparison between a GraphQL request and a REST request to create a ne
         "weight": 100
     }
     ```
-In the REST request, the client sends a POST request to the `/products` endpoint with the product details in the request body to create a new product. The server responds with a JSON object containing the details of the newly created product.
+In the REST request, the client sends a POST request to the `/product` endpoint with the product details in the request body to create a new product. The server responds with a JSON object containing the details of the newly created product.
 In the GraphQL request, the client sends a mutation operation to create a new product with the specified details. The server responds with a JSON object containing the details of the newly created product.
 
 ##### DELETE Request example
@@ -649,7 +673,7 @@ With Postman, this is very simple, as it is already set up for GraphQL queries. 
 
 #### cURL
 
-With it, the composition of requests is more laborious as one has to compose requests by hand:
+With it, the composition of requests is more laborious as one has to compose requests by hand, and it is required to know the schema in advance (if not we have to use an introspection query before). Here are some examples of requests:
 
 - **Query**:
 
@@ -668,7 +692,6 @@ With it, the composition of requests is more laborious as one has to compose req
     ```
 
 The request itself is nothing more than a JSON object with the query or mutation to be executed; the keyword *query* at the beginning of the object is mandatory, regardless of the type of request.
-
 
 #### By code
 
@@ -727,9 +750,13 @@ private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class
 For the complete code, see the attached code in the repository.
 
 ## Try out the GraphQL endpoint
-In this repository, there are two services that can be used to test the GraphQL endpoint: the *product-service* and the *recommendation-service*.
-The first one is used to manage products, while the second one is used to manage recommendations. They work in a similar way, but with different objects and queries.
-The GraphQL API specification can be retrieved by using a simple GraphQL client like Postman, cURL or by using the GraphiQL interface (if you want to do just a walkthrough with APIs).
+In this repository, there are four services that can be used to test the GraphQL endpoint: 
+- **product-service**: for product retrieval, insertion and deletion;
+- **recommendation-service**: for recommendation retrieval, insertion and deletion;
+- **review-service**: for review retrieval, insertion and deletion;
+- **product-composite-service**: for product retrieval along with its own recommendations and reviews (if them are available).
+All of them work in a similar way, but with different objects, queries and mutations, obviously.
+The GraphQL API specification can be retrieved by using a simple GraphQL client like Postman, cURL (by the *introspection* query) or by using the GraphiQL interface (if you want to do just a walkthrough with APIs).
 
 To do that, you can clone the repository and build and run the project inside IntelliJ IDEA by launching the command `mvn run` in the project root folder.
 
