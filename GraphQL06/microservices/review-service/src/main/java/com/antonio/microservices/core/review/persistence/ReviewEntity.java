@@ -1,18 +1,23 @@
 package com.antonio.microservices.core.review.persistence;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "reviews", indexes = { @Index(name = "reviews_unique_idx", unique = true, columnList = "productId,reviewId") })
+@Document(collection = "reviews")
+@CompoundIndex(name = "prod-rec-id", unique = true, def = "{'productId': 1, 'reviewId' : 1}")
 public class ReviewEntity {
 
-    @Id @GeneratedValue
+    @Id
     private int id;
 
     @Version
     private int version;
 
     private int productId;
+
     private int reviewId;
     private String author;
     private String subject;

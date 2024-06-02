@@ -1,18 +1,20 @@
 package com.antonio.core.product.services;
 
+import com.antonio.core.product.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Controller;
-import com.antonio.api.core.product.Product;
-import com.antonio.api.core.product.ProductController;
-import com.antonio.api.exceptions.InvalidInputException;
-import com.antonio.api.exceptions.NotFoundException;
+import com.antonio.core.product.exceptions.InvalidInputException;
+import com.antonio.core.product.exceptions.NotFoundException;
 import com.antonio.core.product.persistence.ProductEntity;
 import com.antonio.core.product.persistence.ProductRepository;
-import com.antonio.util.http.ServiceUtil;
+import com.antonio.core.product.http.ServiceUtil;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProductControllerImpl implements ProductController {
@@ -24,11 +26,16 @@ public class ProductControllerImpl implements ProductController {
 
     private final ProductMapper mapper;
 
+    private ProductCompositeIntegration integration;
+
+
     @Autowired
-    public ProductControllerImpl(ProductRepository repository, ProductMapper mapper, ServiceUtil serviceUtil) {
+    public ProductControllerImpl(ProductRepository repository, ProductMapper mapper, ServiceUtil serviceUtil,
+                                 ProductCompositeIntegration integration) {
         this.repository = repository;
         this.mapper = mapper;
         this.serviceUtil = serviceUtil;
+        this.integration = integration;
     }
 
     @Override
@@ -41,7 +48,6 @@ public class ProductControllerImpl implements ProductController {
                 .orElseThrow(() -> new NotFoundException("No product found for productId: " + productId));
 
         Product response = mapper.entityToApi(entity);
-        response.setServiceAddress(serviceUtil.getServiceAddress());
 
         LOG.debug("getProduct: found productId: {}", response.getProductId());
 
@@ -70,5 +76,38 @@ public class ProductControllerImpl implements ProductController {
         }
         repository.findByProductId(productId).ifPresent(e -> repository.delete(e));
         return Boolean.TRUE;
+    }
+
+    @Override
+    public ProductAggregate getProductAggregate(@Argument int productId) {
+
+        LOG.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
+
+        Product product = getProduct(productId);
+
+        List<Review> reviews = integration.getReviews(productId);
+
+        LOG.debug("getCompositeProduct: aggregate entity found for productId: {}", productId);
+
+        return parsingProductAggregate(product, reviews);
+    }
+
+    // Create ProductAggregate from the product, recommendations, and reviews to show them all together
+    private ProductAggregate parsingProductAggregate(
+            Product product,
+            List<Review>reviews) {
+
+        // 1. Setup product info
+        int productId = product.getProductId();
+        String name = product.getName();
+        int weight = product.getWeight();
+
+        // 2. Copy summary review info, if available
+        List<ReviewSummary> reviewSummaries = (reviews == null) ? null :
+                reviews.stream()
+                        .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent()))
+                        .collect(Collectors.toList());
+
+        return new ProductAggregate(productId, name, weight, reviewSummaries);
     }
 }

@@ -3,20 +3,17 @@ server.error.include-message: always
 spring:
   graphql:
     schema:
-      locations: classpath*:graphql/review-service/**/
+      locations: classpath*:graphql/**/
     graphiql:
       path: /graphiql
       enabled: true
 
 # Strongly recommend to set this property to "none" in a production environment!
-spring.jpa.hibernate.ddl-auto: update
+spring.data.mongodb:
+  host: localhost
+  port: 27017
+  database: review-db
 
-spring.datasource:
-  url: jdbc:mysql://localhost/review-db
-  username: user
-  password: pwd
-
-spring.datasource.hikari.initializationFailTimeout: 60000
 
 logging:
   level:
@@ -36,5 +33,4 @@ spring:
       enabled: true
 server.port: 7003
 
-spring.datasource:
-  url: jdbc:mysql://mysql/review-db
+spring.data.mongodb.host: mongodb

@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.RestController;
-import com.antonio.api.core.product.Product;
-import com.antonio.api.core.product.ProductService;
-import com.antonio.api.exceptions.InvalidInputException;
-import com.antonio.api.exceptions.NotFoundException;
+import com.antonio.core.product.Product;
+import com.antonio.core.product.ProductService;
+import com.antonio.core.product.exceptions.InvalidInputException;
+import com.antonio.core.product.exceptions.NotFoundException;
 import com.antonio.core.product.persistence.ProductRepository;
-import com.antonio.util.http.ServiceUtil;
+import com.antonio.core.product.http.ServiceUtil;
 
 @RestController
 public class ProductServiceImpl implements ProductService {
@@ -56,7 +56,6 @@ public class ProductServiceImpl implements ProductService {
       .orElseThrow(() -> new NotFoundException("No product found for productId: " + productId));
 
     Product response = mapper.entityToApi(entity);
-    response.setServiceAddress(serviceUtil.getServiceAddress());
 
     LOG.debug("getProduct: found productId: {}", response.getProductId());
 

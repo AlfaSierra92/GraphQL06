@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import com.antonio.api.core.review.Review;
-import com.antonio.api.core.review.ReviewController;
-import com.antonio.api.exceptions.InvalidInputException;
+import com.antonio.microservices.core.review.Review;
+import com.antonio.microservices.core.review.ReviewController;
+import com.antonio.microservices.core.review.exceptions.InvalidInputException;
 import com.antonio.microservices.core.review.persistence.ReviewEntity;
 import com.antonio.microservices.core.review.persistence.ReviewRepository;
-import com.antonio.util.http.ServiceUtil;
+import com.antonio.microservices.core.review.http.ServiceUtil;
 
 import java.util.List;
 
@@ -54,7 +54,6 @@ public class ReviewControllerImpl implements ReviewController {
 
         List<ReviewEntity> entityList = repository.findByProductId(productId);
         List<Review> list = mapper.entityListToApiList(entityList);
-        list.forEach(e -> e.setServiceAddress(serviceUtil.getServiceAddress()));
 
         LOG.debug("getReviews: response size: {}", list.size());
 

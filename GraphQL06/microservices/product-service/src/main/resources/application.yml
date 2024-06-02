@@ -3,10 +3,11 @@ server.error.include-message: always
 spring:
   graphql:
     schema:
-      locations: classpath*:graphql/product-service/**/
+      locations: classpath*:graphql/**/
     graphiql:
       path: /graphiql
       enabled: true
+
 spring.data.mongodb:
   host: localhost
   port: 27017
@@ -18,6 +19,11 @@ logging:
     se.magnus: DEBUG
     org.springframework.data.mongodb.core.MongoTemplate: DEBUG
     org.springframework.graphql: TRACE
+
+app:
+  review-service:
+    host: localhost
+    port: 7003
 
 ---
 spring.config.activate.on-profile: docker
@@ -38,3 +44,8 @@ logging:
     org.springframework.graphql: TRACE
 
 spring.data.mongodb.host: mongodb
+
+app:
+  review-service:
+    host: review
+    port: 7003

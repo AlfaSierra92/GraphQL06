@@ -1,13 +1,13 @@
 package com.antonio.core.product.services;
 
-import com.antonio.api.core.product.Product;
+import com.antonio.core.product.Product;
 import com.antonio.core.product.persistence.ProductEntity;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-06-01T09:42:58+0200",
+    date = "2024-06-02T20:06:53+0200",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component

@@ -8,8 +8,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import com.antonio.api.core.product.Product;
-//import se.magnus.microservices.composite.product.services.ProductCompositeIntegration;
+import com.antonio.core.product.Product;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -32,13 +31,13 @@ public class GraphQLControllerTest extends MongoDbTestBase{
     void setUp() {
         // Mock response
         when(compositeIntegration.getProduct(1))
-                .thenReturn(new Product(1, "Sample Product", 1, "mock-address"));
+                .thenReturn(new Product(1, "Sample Product", 1));
     }
 
     @Test
     void createCompositeProduct1() {
 
-        Product compositeProduct = new Product(1, "Sample Product", 1, "mock-address");
+        Product compositeProduct = new Product(1, "Sample Product", 1);
 
         postAndVerifyProduct(compositeProduct, OK);
     }

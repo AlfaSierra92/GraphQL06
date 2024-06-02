@@ -36,18 +36,6 @@
 
     <dependencies>
         <!-- Project Dependencies -->
-        <dependency>
-            <groupId>com.antonio.microservices.api</groupId>
-            <artifactId>api</artifactId>
-            <scope>compile</scope>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.antonio.microservices.util</groupId>
-            <artifactId>util</artifactId>
-            <scope>compile</scope>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
 
         <!-- Spring Boot Dependencies -->
         <dependency>
