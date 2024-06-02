@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.RestController;
 import com.antonio.core.product.Product;
-import com.antonio.core.product.ProductService;
+import com.antonio.core.product.interfaces.ProductService;
 import com.antonio.core.product.exceptions.InvalidInputException;
 import com.antonio.core.product.exceptions.NotFoundException;
 import com.antonio.core.product.persistence.ProductRepository;

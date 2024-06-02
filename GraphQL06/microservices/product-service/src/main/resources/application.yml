@@ -30,7 +30,7 @@ spring.config.activate.on-profile: docker
 spring:
   graphql:
     schema:
-      locations: classpath*:graphql/product-service/**/
+      locations: classpath*:graphql/**/
     graphiql:
       path: /graphiql
       enabled: true

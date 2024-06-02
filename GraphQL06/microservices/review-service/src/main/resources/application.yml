@@ -19,15 +19,14 @@ logging:
   level:
     root: INFO
     se.magnus: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.graphql: TRACE
 
 ---
 spring.config.activate.on-profile: docker
 spring:
   graphql:
     schema:
-      locations: classpath*:graphql/review-service/**/
+      locations: classpath*:graphql/**/
     graphiql:
       path: /graphiql
       enabled: true

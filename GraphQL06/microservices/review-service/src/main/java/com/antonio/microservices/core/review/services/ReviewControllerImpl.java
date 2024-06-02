@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import com.antonio.microservices.core.review.Review;
-import com.antonio.microservices.core.review.ReviewController;
+import com.antonio.microservices.core.review.interfaces.ReviewController;
 import com.antonio.microservices.core.review.exceptions.InvalidInputException;
 import com.antonio.microservices.core.review.persistence.ReviewEntity;
 import com.antonio.microservices.core.review.persistence.ReviewRepository;

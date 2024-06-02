@@ -20,7 +20,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      mysql:
+      mongodb:
         condition: service_healthy
 
   mongodb:
@@ -31,22 +31,6 @@ services:
     command: mongod
     healthcheck:
       test: "mongostat -n 1"
-      interval: 5s
-      timeout: 2s
-      retries: 60
-
-  mysql:
-    image: mysql:8.0.32
-    mem_limit: 512m
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=rootpwd
-      - MYSQL_DATABASE=review-db
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=pwd
-    healthcheck:
-      test: "/usr/bin/mysql --user=user --password=pwd --execute \"SHOW DATABASES;\""
       interval: 5s
       timeout: 2s
       retries: 60

@@ -1,5 +1,6 @@
-package com.antonio.core.product;
+package com.antonio.microservices.core.review.interfaces;
 
+import com.antonio.microservices.core.review.Review;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

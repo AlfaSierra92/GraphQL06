@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import com.antonio.api.core.product.Product;
+import com.antonio.core.product.Product;
 import com.antonio.core.product.persistence.ProductRepository;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -110,7 +110,7 @@ class ProductServiceApplicationTests extends MongoDbTestBase {
   }
 
   private WebTestClient.BodyContentSpec postAndVerifyProduct(int productId, HttpStatus expectedStatus) {
-    Product product = new Product(productId, "Name " + productId, productId, "SA");
+    Product product = new Product(productId, "Name " + productId, productId);
     return client.post()
       .uri("/product")
       .body(just(product), Product.class)

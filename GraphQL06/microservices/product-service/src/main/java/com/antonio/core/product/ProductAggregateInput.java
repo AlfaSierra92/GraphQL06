@@ -1,60 +1,66 @@
-package com.antonio.microservices.core.review.persistence;
+package com.antonio.core.product;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
-@Document(collection = "reviews")
-@CompoundIndex(name = "prod-rec-id", unique = true, def = "{'productId': 1, 'reviewId' : 1}")
-public class ReviewEntity {
-
-    @Id
-    private String id;
-
-    @Version
-    private int version;
-
+public class ProductAggregateInput {
     private int productId;
-
+    private String name;
+    private int weight;
     private int reviewId;
     private String author;
     private String subject;
     private String content;
 
-    public ReviewEntity() {
+    public ProductAggregateInput() {
+        productId = 0;
+        name = null;
+        weight = 0;
+        reviewId = 0;
+        author = null;
+        subject = null;
+        content = null;
     }
 
-    public ReviewEntity(int productId, int reviewId, String author, String subject, String content) {
+    public ProductAggregateInput(
+            int productId,
+            String name,
+            int weight,
+            int reviewId,
+            String author,
+            String subject,
+            String content) {
+
         this.productId = productId;
+        this.name = name;
+        this.weight = weight;
         this.reviewId = reviewId;
         this.author = author;
         this.subject = subject;
         this.content = content;
     }
 
-    public String getId() {
-        return id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public int getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 
     public int getReviewId() {

@@ -1,5 +1,6 @@
-package com.antonio.core.product;
+package com.antonio.core.product.interfaces;
 
+import com.antonio.core.product.Product;
 import org.springframework.web.bind.annotation.*;
 
 public interface ProductService {

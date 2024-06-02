@@ -1,6 +1,7 @@
 package com.antonio.core.product.services;
 
 import com.antonio.core.product.*;
+import com.antonio.core.product.interfaces.ProductController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class ProductControllerImpl implements ProductController {
         this.integration = integration;
     }
 
+    // Used to read a product by productId
     @Override
     public Product getProduct(@Argument int productId) {
         if (productId < 1) {
@@ -54,6 +56,7 @@ public class ProductControllerImpl implements ProductController {
         return response;
     }
 
+    // Used to create a product
     @Override
     public Product createProduct(@Argument Product input) {
         try {
@@ -68,6 +71,7 @@ public class ProductControllerImpl implements ProductController {
         }
     }
 
+    // Used to delete a product by productId
     @Override
     public Boolean deleteProduct(int productId) {
         LOG.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
@@ -78,6 +82,7 @@ public class ProductControllerImpl implements ProductController {
         return Boolean.TRUE;
     }
 
+    // Used to get a product aggregate by productId (product and reviews)
     @Override
     public ProductAggregate getProductAggregate(@Argument int productId) {
 
@@ -92,7 +97,7 @@ public class ProductControllerImpl implements ProductController {
         return parsingProductAggregate(product, reviews);
     }
 
-    // Create ProductAggregate from the product, recommendations, and reviews to show them all together
+    // Create ProductAggregate from the product and reviews to show them all together
     private ProductAggregate parsingProductAggregate(
             Product product,
             List<Review>reviews) {
@@ -109,5 +114,23 @@ public class ProductControllerImpl implements ProductController {
                         .collect(Collectors.toList());
 
         return new ProductAggregate(productId, name, weight, reviewSummaries);
+    }
+
+    // Used to create a product aggregate (product and reviews)
+    public ProductAggregate createProductAggregate(@Argument ProductAggregateInput input) {
+        createProduct(new Product(input.getProductId(), input.getName(), input.getWeight()));
+        integration.createReview(new Review(input.getProductId(), input.getReviewId(), input.getAuthor(), input.getSubject(), input.getContent()));
+        List<ReviewSummary> summary = integration.getReviews(input.getProductId()).stream()
+                .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent()))
+                .collect(Collectors.toList());
+        return new ProductAggregate(input.getProductId(), input.getName(), input.getWeight(), summary);
+
+    }
+
+    // Used to delete a product aggregate by productId (product and reviews aka purging)
+    public Boolean deleteProductAggregate(@Argument int productId) {
+        deleteProduct(productId);
+        integration.deleteReviews(productId);
+        return Boolean.TRUE;
     }
 }

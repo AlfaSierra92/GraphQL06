@@ -43,4 +43,5 @@ type Mutation {
     createProduct(input: ProductInput!): Product!
     deleteProduct(productId: Int!): Boolean
     createProductAggregate(input: ProductAggregateInput!): ProductAggregate!
+    deleteProductAggregate(productId: Int!): Boolean
 }

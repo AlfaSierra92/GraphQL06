@@ -13,13 +13,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import com.antonio.core.product.Product;
-import com.antonio.core.product.ProductService;
-import com.antonio.core.product.Review;
-import com.antonio.core.product.ReviewService;
-import com.antonio.core.product.exceptions.InvalidInputException;
-import com.antonio.core.product.exceptions.NotFoundException;
-import com.antonio.core.product.http.HttpErrorInfo;
+import com.antonio.core.product.interfaces.ReviewService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +43,37 @@ public class ProductCompositeIntegration implements ReviewService {
 
 
     public Review createReview(Review body) {
-        throw new UnsupportedOperationException("Creating a review via this microservice is not supported. Use the review service directly.");
+        try {
+            String query = "mutation { createReviews(input: { reviewId: " + body.getReviewId()
+                    + " , productId: " + body.getProductId() + ", author: \\\"" + body.getAuthor() + "\\\", subject: \\\""
+                    + body.getSubject() + "\\\", content: \\\"" + body.getContent() + "\\\" }) { reviewId productId author subject content } }";
+            ResponseEntity<String> response = sendGraphQLRequest(reviewServiceUrl, query, new ParameterizedTypeReference<String>() {
+            });
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(response.getBody());
+
+            // Extracting values from JSON
+            JsonNode reviewNode = rootNode.path("data").path("createReview");
+            int reviewId = reviewNode.path("reviewId").asInt();
+            int productId = reviewNode.path("productId").asInt();
+            String author = reviewNode.path("author").asText();
+            String subject = reviewNode.path("subject").asText();
+            String content = reviewNode.path("content").asText();
+
+            Review review = new Review(reviewId, productId, author, subject, content);
+
+            // Printing the extracted review
+            LOG.debug("Received Review: {}", review);
+
+            return review;
+        } catch (HttpClientErrorException ex) {
+            throw handleHttpClientException(ex);
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Review> getReviews(int productId) {
@@ -86,7 +110,15 @@ public class ProductCompositeIntegration implements ReviewService {
     }
 
     public void deleteReviews(int productId) {
-        throw new UnsupportedOperationException("Deleting a review via this microservice is not supported. Use the review service directly.");
+        try {
+            String query = "mutation { deleteReviews(productId: " + productId + ") }";
+            ResponseEntity<String> response = sendGraphQLRequest(reviewServiceUrl, query, new ParameterizedTypeReference<String>() {
+            });
+
+            LOG.debug("Deleted Reviews for productId: {}", productId);
+        } catch (HttpClientErrorException ex) {
+            throw handleHttpClientException(ex);
+        }
     }
 
     private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class<T> responseType) {

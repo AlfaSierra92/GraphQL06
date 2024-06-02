@@ -6,7 +6,6 @@ import com.antonio.core.product.persistence.ProductEntity;
 import com.antonio.core.product.services.ProductMapper;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
-import com.antonio.api.core.product.Product;
 
 class MapperTests {
 
@@ -17,7 +16,7 @@ class MapperTests {
 
     assertNotNull(mapper);
 
-    Product api = new Product(1, "n", 1, "sa");
+    Product api = new Product(1, "n", 1);
 
     ProductEntity entity = mapper.apiToEntity(api);
 
@@ -32,6 +31,5 @@ class MapperTests {
     assertEquals(api.getProductId(), api2.getProductId());
     assertEquals(api.getName(),      api2.getName());
     assertEquals(api.getWeight(),    api2.getWeight());
-    assertNull(api2.getServiceAddress());
   }
 }
