@@ -442,8 +442,10 @@ Here is a quick overview of the differences between GraphQL and REST API:
 - **Implementation Complexity**: REST can be simpler to implement for basic APIs, while GraphQL may require more initial planning but offers advantages for more complex APIs.
 
 In summary, GraphQL is often preferred for modern and complex applications that require flexible and efficient data interaction, while REST remains a solid choice for simpler APIs with a less dynamic data model.
+Also, GraphQL is not a replacement for REST, but rather a complementary technology that can be used alongside REST APIs to provide more flexibility and efficiency in data retrieval.
+So, the choice between GraphQL and REST depends on the specific requirements of the application and the complexity of the data model.
 
-#### Comparison between GraphQL requests and REST requests
+#### A simple comparison between GraphQL requests and REST requests
 ##### GET Request example
 Here is a comparison between a GraphQL request and a REST request to obtain the same information:
 - **GraphQL request**:
@@ -470,6 +472,9 @@ Here is a comparison between a GraphQL request and a REST request to obtain the 
         }
     }
     ```
+  
+Additionally, GraphQL can help to avoid chattiness by allowing the client to request multiple resources in a single query. For example, the client could request information about multiple products in a single query, reducing the number of requests needed to obtain all the required data (we've talked about this in the first part of this markdown: *Aliases* and *Fragments*).
+
 - **REST request**:
     ```bash
     GET /product/123
@@ -586,6 +591,47 @@ In the REST request, the client sends a DELETE request to the `/products/123` en
 In the GraphQL request, the client sends a mutation operation to delete the product with the specified ID. The server responds with a JSON object indicating the success of the deletion operation.
 
 Note that with graphql we always use the same endpoint using the same HTTP method (POST), unlike the REST API where a different method is used for each type of request: GET for query, POST for inserting, and DELETE to deleting.
+
+##### "Chattiness reduction" 
+In the case of a REST API, using our example, if we want to obtain information about a product and its reviews, we would have to make more than one request to the server: one to obtain the product information, one to obtain the reviews and another one to obtain the recommendations. 
+This can lead to chattiness, where multiple requests are needed to obtain all the required data.
+Indeed, to get all the information about a product, you might have to make several calls:
+- One call to get the product details. 
+- Another call to get the recommendations. 
+- Another call to get the reviews. 
+
+This involves multiple round-trips between the client and the server.
+With GraphQL, you can make a single request to get all this information at once. Here's an example of a GraphQL query that requests all the fields defined in the ProductAggregate type:
+
+```graphql
+{
+    productAggregate(productId: 1) {
+        productId
+        name
+        weight
+        recommendations {
+            recommendationId
+            recommendationText
+        }
+        reviews {
+            reviewId
+            reviewText
+        }
+    }
+}
+```
+This query will return a JSON object containing all the requested fields for the product, recommendations and reviews in a single response. This reduces the number of round-trips between the client and the server, improving performance and reducing chattiness.
+Also, *recommendations* and *reviews* are two different objects, so the query will return a JSON object with two different arrays, one for each object. We can also notice this in the appropriate schema.graphqls:
+```graphql
+type ProductAggregate {
+    productId: Int!
+    name: String!
+    weight: Int!
+    recommendations: [Recommendation]
+    reviews: [Review]
+}
+```
+
 
 ## Code section: Spring boot with GraphQL
 

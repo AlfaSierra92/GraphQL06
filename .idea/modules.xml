@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Microservices-with-Spring-Boot-and-Spring-Cloud-Third-Edition.iml" filepath="$PROJECT_DIR$/.idea/Microservices-with-Spring-Boot-and-Spring-Cloud-Third-Edition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/GraphQL06.iml" filepath="$PROJECT_DIR$/.idea/GraphQL06.iml" />
     </modules>
   </component>
 </project>
