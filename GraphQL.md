@@ -333,7 +333,6 @@ For example, if a GraphQL query contains a syntax error, the server will respond
             productId
             name
             weight
-            serviceAddress
         }
     }
     ```
@@ -455,7 +454,6 @@ Here is a comparison between a GraphQL request and a REST request to obtain the 
             productId
             name
             weight
-            serviceAddress
         }
     }
     ```
@@ -466,8 +464,7 @@ Here is a comparison between a GraphQL request and a REST request to obtain the 
             "getProduct": {
                 "productId": 123,
                 "name": "Product Name",
-                "weight": 100,
-                "serviceAddress": "127.0.0.1"
+                "weight": 100
             }
         }
     }
@@ -485,8 +482,7 @@ Additionally, GraphQL can help to avoid chattiness by allowing the client to req
         {
             "productId": 123,
             "name": "Product Name",
-            "weight": 100,
-            "serviceAddress": "127.0.0.1"
+            "weight": 100
         }
     ```
 
@@ -609,10 +605,6 @@ With GraphQL, you can make a single request to get all this information at once.
         productId
         name
         weight
-        recommendations {
-            recommendationId
-            recommendationText
-        }
         reviews {
             reviewId
             reviewText
@@ -627,7 +619,6 @@ type ProductAggregate {
     productId: Int!
     name: String!
     weight: Int!
-    recommendations: [Recommendation]
     reviews: [Review]
 }
 ```
@@ -686,7 +677,7 @@ If desired, it is possible to declare a different classpath in order to place *.
 spring:
   graphql:
     schema:
-      locations: classpath*:graphql/product-service/**/
+      locations: classpath*:graphql/sub-folder/**/
 ```
 
 In this case, the application will search for the schema file within the subfolder *product-service.*
@@ -765,7 +756,7 @@ With it, the composition of requests is more laborious as one has to compose req
     ```bash
     curl --location '127.0.0.1:7001/graphql' \
     --header 'Content-Type: application/json' \
-    --data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight serviceAddress } }"}'
+    --data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight } }"}'
     ```
 
 - **Mutation (*Input query*)**:
@@ -787,7 +778,7 @@ Here is an example of Java code to do query and json response parsing:
     public Product getProduct(int productId) {
         try {
             // Query building
-            String query = "query { getProduct(productId: " + productId + ") { productId name weight serviceAddress } }";
+            String query = "query { getProduct(productId: " + productId + ") { productId name weight } }";
             // Query execution (the method is declared later)
             ResponseEntity<String> response = sendGraphQLRequest(productServiceUrl, query, String.class);
 
@@ -804,10 +795,9 @@ Here is an example of Java code to do query and json response parsing:
             }
             String name = productNode.path("name").asText();
             int weight = productNode.path("weight").asInt();
-            String serviceAddress = productNode.path("serviceAddress").asText();
 
             // Constructing Product object
-            Product product = new Product(productId, name, weight, serviceAddress);
+            Product product = new Product(productId, name, weight);
             LOG.debug("Found a product with id: {}", product.getProductId());
             return product;
 // Various exceptions handling
@@ -836,10 +826,8 @@ For the complete code, see it in the repository (*GraphQL06* folder).
 
 ## How-to: try out the GraphQL endpoint
 In this repository, there are four services that can be used to test the GraphQL endpoint: 
-- **product-service**: for product retrieval, insertion and deletion;
-- **recommendation-service**: for recommendation retrieval, insertion and deletion;
+- **product-service**: for product retrieval, insertion and deletion with or without recommendations (if available);
 - **review-service**: for review retrieval, insertion and deletion;
-- **product-composite-service**: for product retrieval along with its own recommendations and reviews (if them are available).
 
 All of them work in a similar way, but with different objects, queries and mutations, obviously.
 The GraphQL API specification can be retrieved by using a simple GraphQL client like Postman, cURL (by the *introspection* query) or by using the GraphiQL interface (if you want to do just a walkthrough with APIs).
@@ -855,9 +843,7 @@ Then, you can make requests to the endpoint as described above in the **Request*
 
 For Postman, cURL or similar, just remember to use the url 
 1. [http://localhost:7001/graphql](http://localhost:7001/graphql) to access the *product-service* endpoint;
-2. [http://localhost:7002/graphql](http://localhost:7002/graphql)  to access the *recommendation-service* endpoint;
-3. [http://localhost:7003/graphql](http://localhost:7003/graphql)  to access the *review-service* endpoint;
-4. [http://localhost:6999/graphql](http://localhost:6999/graphql)  to access the *product-composite-service* endpoint.
+3. [http://localhost:7003/graphql](http://localhost:7003/graphql)  to access the *review-service* endpoint.
 
 for the requests. 
 If you want to use the GraphiQL interface, instead of external applications, you can access it by using the same urls but changing the endpoint name to *graphiql* (e.g., [http://localhost:7001/graphiql](http://localhost:7001/graphiql)).
