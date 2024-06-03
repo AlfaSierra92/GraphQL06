@@ -3,7 +3,8 @@ package com.antonio.core.product;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.antonio.core.product.persistence.ProductEntity;
-import com.antonio.core.product.services.ProductMapper;
+import com.antonio.core.product.mapper.ProductMapper;
+import com.antonio.core.product.web.dto.Product;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
