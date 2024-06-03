@@ -29,6 +29,10 @@ class ProductServiceApplicationTests extends MongoDbTestBase {
   }
 
   @Test
+  void contextLoads() {
+  }
+
+  @Test
   void getProductById() {
 
     int productId = 1;

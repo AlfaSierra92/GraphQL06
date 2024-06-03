@@ -1,5 +1,6 @@
 package com.antonio.microservices.core.review.services;
 
+import com.antonio.microservices.core.review.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,10 @@ public class ReviewControllerImpl implements ReviewController {
         List<ReviewEntity> entityList = repository.findByProductId(productId);
         List<Review> list = mapper.entityListToApiList(entityList);
 
+        if (list.size() == 0) {
+            LOG.debug("getReviews: no reviews found for productId: {}", productId);
+            throw new NotFoundException("No reviews found for productId: " + productId);
+        }
         LOG.debug("getReviews: response size: {}", list.size());
 
         return list;
@@ -63,6 +68,9 @@ public class ReviewControllerImpl implements ReviewController {
     @Override
     public Boolean deleteReviews(int productId) {
         LOG.debug("deleteReviews: tries to delete reviews for the product with productId: {}", productId);
+        if (repository.findByProductId(productId).isEmpty()) {
+            throw new NotFoundException("No reviews found for productId: " + productId);
+        }
         repository.deleteAll(repository.findByProductId(productId));
 
         return Boolean.TRUE;
