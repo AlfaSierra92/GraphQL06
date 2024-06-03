@@ -10,11 +10,11 @@ We have two microservices:
 Inside the microservices there are been left REST APIs for the same operations, but they are not used in the project (useful just to do comparisons with GraphQL).
 
 Because of the nature of the GraphQL language, there is no OpenAPI-like documentation for the endpoints; available queries and mutations can be retrieved by quering the GraphQL endpoints via an appropriate client, such as Postman.
-Anyway, further details on GraphQL can be found [here](https://github.com/AlfaSierra92/GraphQL06/blob/release-rc/GraphQL.md).
+Anyway, further details on GraphQL can be found [here](https://github.com/AlfaSierra92/GraphQL06/blob/release-2/GraphQL.md).
 
 All microservices are composed by three layer:
 1. **Protocol layer**: it exposes APIs to the users.
 2. **Service layer**: it implements the interfaces written in protocol layer.
 3. **Persistence layer**: to save data into mongodb.
-
-
+4. **Interface layer**: it contains the interfaces for the service layer.
+5. **Exceptions & http layers**: they contain the exceptions and http error managing for the service layer.

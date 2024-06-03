@@ -160,7 +160,6 @@ Here's a breakdown of how fragments work in GraphQL:
 fragment ProductFields on Product {
     productId
     name
-    serviceAddress
 }
 ```
 In this example, the fragment **`ProductFields`** defines a set of fields that can be included in queries or mutations that require information about a product. The **`on Product`** part specifies that the fragment applies to objects of type **`Product`**.
@@ -183,7 +182,6 @@ query PleaseGetProduct {
   getProduct(productId: 111) {
     productId
     name
-    serviceAddress
   }
 }
 ```
@@ -193,7 +191,6 @@ Will be possible to see *operationName* in some places, like in the GraphQL debu
     getProduct(productId: 112) {
       productId
       name
-      serviceAddress
     }, 
     operationName='PleaseGetProduct'
 --- others logs here ---
@@ -240,15 +237,14 @@ Here is an example of how you can use directives in a GraphQL query:
 query GetProduct($includeServiceAddress: Boolean!) {
   product(id: "123") {
     name
-    price
-    serviceAddress @include(if: $includeServiceAddress)
+    price @include(if: $includePrice)
   }
 }
 ```
-In this query, the **`@include`** directive is used to conditionally include the **`serviceAddress`** field based on the value of the **`includeServiceAddress`** variable. If the variable is **`true`**, the **`serviceAddress`** field will be included in the response; otherwise, it will be excluded.
+In this query, the **`@include`** directive is used to conditionally include the **`price`** field based on the value of the **`includePrice`** variable. If the variable is **`true`**, the **`price`** field will be included in the response; otherwise, it will be excluded.
 ```
 {
-    "$includeServiceAddress": true
+    "$includePrice": true
 }
 ```
 
@@ -289,7 +285,6 @@ type Product {
     productId: Int!
     name: String!
     weight: Int!
-    serviceAddress: [String]
 }
 
 input ProductInput {
