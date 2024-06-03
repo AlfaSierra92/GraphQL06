@@ -40,7 +40,7 @@ echo -e ""
 echo "Product retrieval..."
 response=$(curl --location '127.0.0.1:7001/graphql' \
 --header 'Content-Type: application/json' \
---data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight serviceAddress } }"}' \
+--data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight } }"}' \
 -w "\n%{http_code}" -s)
 
 http_code=$(echo "$response" | tail -n1)
@@ -56,13 +56,13 @@ if [ "$http_code" -eq 200 ]; then
         productId=$(echo "$body" | grep -o '"productId":[0-9]*' | cut -d':' -f2)
         name=$(echo "$body" | grep -o '"name":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         weight=$(echo "$body" | grep -o '"weight":[0-9]*' | cut -d':' -f2)
-        serviceAddress=$(echo "$body" | grep -o '"serviceAddress":"[^"]*"' | cut -d':' -f2- | tr -d '"')
+        # serviceAddress=$(echo "$body" | grep -o '"serviceAddress":"[^"]*"' | cut -d':' -f2- | tr -d '"')
 
         echo "Dettagli del prodotto:"
         echo "ID: $productId"
         echo "Nome: $name"
         echo "Peso: $weight"
-        echo "Indirizzo del servizio: $serviceAddress"
+        # echo "Indirizzo del servizio: $serviceAddress"
         echo "----------TEST OK----------"
     fi
 else
@@ -244,7 +244,7 @@ echo -e ""
 echo "Product retrieval for a non-existing product..."
 response=$(curl --location '127.0.0.1:7001/graphql' \
 --header 'Content-Type: application/json' \
---data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight serviceAddress } }"}' \
+--data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight } }"}' \
 -w "\n%{http_code}" -s)
 
 http_code=$(echo "$response" | tail -n1)
@@ -261,13 +261,13 @@ if [ "$http_code" -eq 200 ]; then
         productId=$(echo "$body" | grep -o '"productId":[0-9]*' | cut -d':' -f2)
         name=$(echo "$body" | grep -o '"name":"[^"]*"' | cut -d':' -f2 | tr -d '"')
         weight=$(echo "$body" | grep -o '"weight":[0-9]*' | cut -d':' -f2)
-        serviceAddress=$(echo "$body" | grep -o '"serviceAddress":"[^"]*"' | cut -d':' -f2- | tr -d '"')
+        # serviceAddress=$(echo "$body" | grep -o '"serviceAddress":"[^"]*"' | cut -d':' -f2- | tr -d '"')
 
         echo "Dettagli del prodotto:"
         echo "ID: $productId"
         echo "Nome: $name"
         echo "Peso: $weight"
-        echo "Indirizzo del servizio: $serviceAddress"
+        # echo "Indirizzo del servizio: $serviceAddress"
         # echo "----------TEST OK----------"
     fi
 else
