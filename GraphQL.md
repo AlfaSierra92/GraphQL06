@@ -733,14 +733,14 @@ It can be changed via *path:* field.
 
 Here is an example:
 
-<img width="1278" alt="image" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/de34745f-bbbf-469c-86b9-58fbd171083c">
+<img width="1499" alt="GraphiQL example" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/536f7a24-09b5-46ba-9949-cff31c12803b">
 It is advisable to use this mode only during development, as enabling this endpoint could potentially create security issues.
 
 #### Postman
 
 With Postman, this is very simple, as it is already set up for GraphQL queries. By putting in the correct url, it will automatically retrieve the schema of objects, queries and mutations and allow the various queries to be composed intuitively.
 
-![Postman example](https://github.com/AlfaSierra92/GraphQL06/assets/4050967/66966d7b-37b7-4b63-b52c-3868c5128371)
+<img width="1087" alt="Postman example" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/5f1a7185-b8e8-4723-916a-050d7bbe5a18">
 
 #### cURL
 
@@ -754,6 +754,10 @@ With it, the composition of requests is more laborious as one has to compose req
     --data '{"query":"query GetProduct { getProduct(productId: 92) { productId name weight } }"}'
     ```
 
+    and the response will be:
+    <img width="860" alt="image" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/dbc6cf7c-dac7-4925-bf78-d4c4d16ef27c">
+
+
 - **Mutation (*Input query*)**:
 
     ```bash
@@ -761,6 +765,9 @@ With it, the composition of requests is more laborious as one has to compose req
     --header 'Content-Type: application/json' \
     --data '{"query":"mutation { createProduct(input: { productId: 92, name: \"1111\", weight: 111 }) { productId name weight } }"}'
     ```
+    and the response will be:
+    <img width="1127" alt="image" src="https://github.com/AlfaSierra92/GraphQL06/assets/4050967/9788c2d1-98a8-4cb4-beb6-d058c7e4bc78">
+
 
 The request itself is nothing more than a JSON object with the query or mutation to be executed; the keyword *query* at the beginning of the object is mandatory, regardless of the type of request.
 
