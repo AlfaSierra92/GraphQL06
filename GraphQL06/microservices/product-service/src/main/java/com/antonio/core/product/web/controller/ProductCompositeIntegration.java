@@ -14,13 +14,12 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import com.antonio.core.product.web.services.ReviewService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProductCompositeIntegration implements ReviewService {
+public class ProductCompositeIntegration {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeIntegration.class);
 
