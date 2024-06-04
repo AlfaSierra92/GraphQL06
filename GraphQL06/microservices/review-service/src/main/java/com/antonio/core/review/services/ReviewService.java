@@ -1,6 +1,6 @@
-package com.antonio.microservices.core.review.services;
+package com.antonio.core.review.services;
 
-import com.antonio.microservices.core.review.web.dto.Review;
+import com.antonio.core.review.web.dto.Review;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.antonio.microservices.core.review.controller;
+package com.antonio.core.review.controller;
 
-import com.antonio.microservices.core.review.web.dto.Review;
+import com.antonio.core.review.web.dto.Review;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;

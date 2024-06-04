@@ -1,8 +1,8 @@
-package com.antonio.microservices.core.review.web.errors;
+package com.antonio.core.review.web.errors;
 
-import com.antonio.microservices.core.review.web.exceptions.BadRequestException;
-import com.antonio.microservices.core.review.web.exceptions.InvalidInputException;
-import com.antonio.microservices.core.review.web.exceptions.NotFoundException;
+import com.antonio.core.review.web.exceptions.BadRequestException;
+import com.antonio.core.review.web.exceptions.InvalidInputException;
+import com.antonio.core.review.web.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

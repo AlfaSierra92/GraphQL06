@@ -1,4 +1,4 @@
-package com.antonio.microservices.core.review.persistence;
+package com.antonio.core.review.persistence;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;

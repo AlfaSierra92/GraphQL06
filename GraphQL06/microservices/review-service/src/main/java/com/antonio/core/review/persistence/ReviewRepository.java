@@ -1,4 +1,4 @@
-package com.antonio.microservices.core.review.persistence;
+package com.antonio.core.review.persistence;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;

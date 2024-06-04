@@ -121,7 +121,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
                 <configuration>
-                    <mainClass>com.antonio.microservices.core.review.ReviewServiceApplication</mainClass>
+                    <mainClass>com.antonio.core.review.ReviewServiceApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>

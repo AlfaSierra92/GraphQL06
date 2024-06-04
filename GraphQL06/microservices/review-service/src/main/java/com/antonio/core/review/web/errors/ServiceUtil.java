@@ -1,4 +1,4 @@
-package com.antonio.microservices.core.review.web.errors;
+package com.antonio.core.review.web.errors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

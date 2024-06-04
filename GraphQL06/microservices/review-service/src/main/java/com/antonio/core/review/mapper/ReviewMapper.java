@@ -1,11 +1,12 @@
-package com.antonio.microservices.core.review.mapper;
+package com.antonio.core.review.mapper;
 
 import java.util.List;
+
+import com.antonio.core.review.persistence.ReviewEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import com.antonio.microservices.core.review.web.dto.Review;
-import com.antonio.microservices.core.review.persistence.ReviewEntity;
+import com.antonio.core.review.web.dto.Review;
 
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {

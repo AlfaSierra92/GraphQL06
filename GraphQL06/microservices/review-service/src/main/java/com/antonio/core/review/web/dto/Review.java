@@ -1,4 +1,4 @@
-package com.antonio.microservices.core.review.web.dto;
+package com.antonio.core.review.web.dto;
 
 public class Review {
     private int productId;

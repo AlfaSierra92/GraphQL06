@@ -1,4 +1,4 @@
-package com.antonio.microservices.core.review.web.exceptions;
+package com.antonio.core.review.web.exceptions;
 
 public class NotFoundException extends RuntimeException {
 

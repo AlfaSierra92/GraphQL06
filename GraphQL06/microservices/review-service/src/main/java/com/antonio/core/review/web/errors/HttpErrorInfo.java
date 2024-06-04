@@ -1,4 +1,4 @@
-package com.antonio.microservices.core.review.web.errors;
+package com.antonio.core.review.web.errors;
 
 import org.springframework.http.HttpStatus;
 

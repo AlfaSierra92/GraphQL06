@@ -1,18 +1,18 @@
-package com.antonio.microservices.core.review.controller;
+package com.antonio.core.review.controller;
 
-import com.antonio.microservices.core.review.mapper.ReviewMapper;
-import com.antonio.microservices.core.review.services.ReviewServiceImpl;
-import com.antonio.microservices.core.review.web.exceptions.NotFoundException;
+import com.antonio.core.review.persistence.ReviewEntity;
+import com.antonio.core.review.persistence.ReviewRepository;
+import com.antonio.core.review.mapper.ReviewMapper;
+import com.antonio.core.review.services.ReviewServiceImpl;
+import com.antonio.core.review.web.exceptions.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import com.antonio.microservices.core.review.web.dto.Review;
-import com.antonio.microservices.core.review.web.exceptions.InvalidInputException;
-import com.antonio.microservices.core.review.persistence.ReviewEntity;
-import com.antonio.microservices.core.review.persistence.ReviewRepository;
-import com.antonio.microservices.core.review.web.errors.ServiceUtil;
+import com.antonio.core.review.web.dto.Review;
+import com.antonio.core.review.web.exceptions.InvalidInputException;
+import com.antonio.core.review.web.errors.ServiceUtil;
 
 import java.util.List;
 
