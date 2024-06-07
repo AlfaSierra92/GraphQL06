@@ -777,40 +777,38 @@ Since the response of a GraphQL query is nothing more than a json-formatted body
 Here is an example of Java code to do query and json response parsing:
 ```java
 @Override
-    public Product getProduct(int productId) {
-        try {
-            // Query building
-            String query = "query { getProduct(productId: " + productId + ") { productId name weight } }";
-            // Query execution (the method is declared later)
-            ResponseEntity<String> response = sendGraphQLRequest(productServiceUrl, query, String.class);
+public List<Review> getReviews(int productId) {
+    try {
+        String query = "query { getReviews(productId: " + productId + ") { reviewId productId author subject content } }";
+        ResponseEntity<String> response = sendGraphQLRequest(reviewServiceUrl, query, new ParameterizedTypeReference<String>() {
+        });
 
-            // Waiting for response
-            
-            String responseBody = response.getBody();
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode rootNode = mapper.readTree(responseBody);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(response.getBody());
 
-            // Extracting values from JSON
-            JsonNode productNode = rootNode.path("data").path("getProduct");
-            if (productNode.isMissingNode()) { // In case of a missing product
-                throw new NotFoundException("No product found for productId: " + productId);
-            }
-            String name = productNode.path("name").asText();
-            int weight = productNode.path("weight").asInt();
-
-            // Constructing Product object
-            Product product = new Product(productId, name, weight);
-            LOG.debug("Found a product with id: {}", product.getProductId());
-            return product;
-// Various exceptions handling
-        } catch (HttpClientErrorException ex) {
-            throw handleHttpClientException(ex);
-        } catch (JsonMappingException e) {
-            throw new RuntimeException(e);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+        // Extracting values from JSON
+        JsonNode reviewsNode = rootNode.path("data").path("getReviews");
+        List<Review> reviews = new ArrayList<>();
+        for (JsonNode reviewNode : reviewsNode) {
+            int reviewId = reviewNode.path("reviewId").asInt();
+            String author = reviewNode.path("author").asText();
+            String subject = reviewNode.path("subject").asText();
+            String content = reviewNode.path("content").asText();
+            reviews.add(new Review(productId, reviewId, author, subject, content));
         }
+
+        // Printing the extracted reviews
+        LOG.debug("Received Reviews: {}", reviews);
+
+        return reviews;
+    } catch (HttpClientErrorException ex) {
+        throw handleHttpClientException(ex);
+    } catch (JsonMappingException e) {
+        throw new RuntimeException(e);
+    } catch (JsonProcessingException e) {
+        throw new RuntimeException(e);
     }
+}
 
 // Creating a http request, with the GraphQL query into the body
 private <T> ResponseEntity<T> sendGraphQLRequest(String url, String query, Class<T> responseType) {
